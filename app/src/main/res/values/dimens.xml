@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="section_title_size">14sp</dimen>
+    <dimen name="btn_text_size">14sp</dimen>
+
+    <dimen name="GoalFontSize">14sp</dimen>
+    <dimen name="ObstacleFontSize">14sp</dimen>
+    <dimen name="date_list_text_size">12sp</dimen>
+
+</resources>

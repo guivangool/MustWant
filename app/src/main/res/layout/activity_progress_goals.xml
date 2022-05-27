@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ProgressGoals"
+    android:orientation="vertical"
+    android:background="@color/green_background_initial">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbProgressGoals"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        app:title="REGISTRE EL AVANCE (=, + , -)"
+        />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clProgressGoals"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_panel"
+    android:layout_margin="10dp"
+    android:paddingBottom="10dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMyGoalsProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="5dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/green_button"
+            android:text="ACEPTAR"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_text_size"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/green_button"
+            android:text="CANCELAR"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_text_size" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,132 @@
+package com.example.musthave.Activities
+
+import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.musthave.DataEntities.ConfigurationEntity
+import com.example.musthave.MustWantApp
+import com.example.musthave.R
+import com.example.musthave.databinding.ActivitySelectGoalsBinding
+import kotlinx.coroutines.launch
+
+
+class SelectGoals : AppCompatActivity() {
+
+    private var binding: ActivitySelectGoalsBinding? = null
+    private var GoalMeisSelected = false
+    private var GoalHomeisSelected = false
+    private var GoalRelationisSelected = false
+    private var GoalWorkisSelected = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val configurationDao = (application as MustWantApp).db.configurationDao()
+
+        //Binding
+        binding = ActivitySelectGoalsBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        //Action Bar
+        setSupportActionBar(binding?.tbSelectGoals)
+
+        if (supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        binding?.tbSelectGoals?.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+        var goalList: ArrayList<Int> = getIntent().extras!!.get("goalList") as ArrayList<Int>
+        var isNew: Boolean = getIntent().getBooleanExtra("isNew", false)
+
+        for (goalSelected in goalList) {
+            when (goalSelected) {
+                1 -> {
+                    selectedGoal(binding?.GoalMe as TextView, true)
+                    GoalMeisSelected = true
+                }
+                2 -> {
+                    selectedGoal(binding?.GoalHome as TextView, true)
+                    GoalHomeisSelected = true
+                }
+                3 -> {
+                    selectedGoal(binding?.GoalWork as TextView, true)
+                    GoalWorkisSelected = true
+                }
+                4 -> {
+                    selectedGoal(binding?.GoalRelations as TextView, true)
+                    GoalRelationisSelected = true
+                }
+            }
+        }
+
+
+
+        binding?.GoalMe?.setOnClickListener {
+            GoalMeisSelected = !GoalMeisSelected
+            selectedGoal(binding?.GoalMe as TextView, GoalMeisSelected)
+        }
+        binding?.GoalHome?.setOnClickListener {
+            GoalHomeisSelected = !GoalHomeisSelected
+            selectedGoal(binding?.GoalHome as TextView, GoalHomeisSelected)
+        }
+        binding?.GoalRelations?.setOnClickListener {
+            GoalRelationisSelected = !GoalRelationisSelected
+            selectedGoal(binding?.GoalRelations as TextView, GoalRelationisSelected)
+        }
+        binding?.GoalWork?.setOnClickListener {
+            GoalWorkisSelected = !GoalWorkisSelected
+            selectedGoal(binding?.GoalWork as TextView, GoalWorkisSelected)
+        }
+
+        binding?.btnConfirm?.setOnClickListener {
+
+            lifecycleScope.launch {
+                if (!isNew) {
+                    configurationDao.update(
+                        ConfigurationEntity(
+                            1,
+                            GoalMeisSelected,
+                            GoalHomeisSelected,
+                            GoalRelationisSelected,
+                            GoalWorkisSelected
+                        )
+                    )
+                } else {
+                    configurationDao.insert(
+                        ConfigurationEntity(
+                            1,
+                            GoalMeisSelected,
+                            GoalHomeisSelected,
+                            GoalRelationisSelected,
+                            GoalWorkisSelected
+                        )
+                    )
+                }
+            }
+            finish()
+        }
+
+        binding?.btnCancel?.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun selectedGoal(tv: TextView, selected: Boolean) {
+        if (selected) {
+            tv.background = ContextCompat.getDrawable(this, R.drawable.bg_selected_goals)
+            tv.setTextColor(getResources().getColor(R.color.white))
+        } else {
+            tv.background = ContextCompat.getDrawable(this, R.drawable.bg_goals)
+            tv.setTextColor(getResources().getColor(R.color.black))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+}

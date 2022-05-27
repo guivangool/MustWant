@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/backgroung_panel_transparent"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/tvObstacleDate"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/bg_obstacle"
+        android:gravity="center"
+        android:textColor="@color/black"
+
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/date_list_text_size"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/tvObstacleDescription"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tvObstacleDate"
+        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:background="@drawable/bg_obstacle"
+        android:layout_marginLeft="5dp"
+        android:gravity="left"
+        android:textColor="@color/black"
+        android:textSize="@dimen/ObstacleFontSize"
+
+        android:paddingLeft="5dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/rgObstacleStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/radio_group_background_white"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/tvObstacleDescription"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RadioButton
+            android:id="@+id/rbPendingState"
+            android:layout_width="90dp"
+            android:layout_height="25dp"
+            android:text="Pendiente"
+            android:background="@drawable/radio_button_background"
+            android:button="@null"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:checked="true"
+            android:textSize="@dimen/btn_text_size"
+            android:textColor="@drawable/radio_button_textcolor_selector"/>
+        <RadioButton
+            android:id="@+id/rbCompletedState"
+            android:layout_width="90dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:text="Finalizada"
+            android:background="@drawable/radio_button_background"
+            android:button="@null"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/btn_text_size"
+            android:textColor="@drawable/radio_button_textcolor_selector"
+            />
+
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
