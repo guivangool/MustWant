@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Ask user to confirm delete All
     private fun confirmDeleteAll() {
         val customDialog = Dialog(this)
         val dialogBinding = CustomDialogAcceptCancelBinding.inflate(layoutInflater)
