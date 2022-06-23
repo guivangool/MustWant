@@ -19,6 +19,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MustHave">
         <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MustHave.NoActionBar" />
+        <activity
+            android:name=".Activities.Initial"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MustHave.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MustHave.NoActionBar" />
+        <activity
             android:name=".Activities.ProgressGoalsList"
             android:exported="true" />
         <activity
@@ -27,7 +48,7 @@
         <activity
             android:name=".Activities.RemoveObstacle"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Activities.CreateInspiration"
             android:exported="true" />
@@ -35,20 +56,6 @@
             android:name=".Activities.ProgressGoals"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity
-            android:name=".Activities.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity
-            android:name=".Activities.Initial"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".Activities.SelectGoals"
             android:exported="true"

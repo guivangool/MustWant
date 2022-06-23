@@ -28,7 +28,7 @@
             android:layout_gravity="top|left"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="MIS OBJETIVOS"
+            android:text="@string/title_my_goals"
             android:textStyle="bold"
             android:textColor="@color/section_title_color"
             android:textSize="@dimen/section_title_size"/>
@@ -40,8 +40,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="10dp"
-
-            android:text="No seleccionaste ningún objetivo."
+            android:text="@string/message_no_goals_selected"
             android:textStyle="bold"
             android:textColor="@color/gray"
             android:textSize="16sp"/>
@@ -71,7 +70,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="ACCIONES"
+        android:text="@string/title_actions"
         android:layout_gravity="left"
         android:layout_marginLeft="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -100,7 +99,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Registrar avance"
+        android:text="@string/option_name_register_advance"
         />
 
     <TextView
@@ -115,7 +114,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Eliminar obstáculo"
+        android:text="@string/option_name_remove_obstacle"
         />
 
     <TextView
@@ -131,7 +130,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Administrar Obstáculos"
+        android:text="@string/option_name_admin_obstacles"
         />
     </LinearLayout>
     </LinearLayout>
@@ -191,7 +190,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:text="CONFIGURACIÓN"
+        android:text="@string/title_configuration"
         android:layout_gravity="left"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -219,7 +218,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Elegir Objetivos"
+        android:text="@string/option_name_select_goals"
         />
 
     <TextView
@@ -234,7 +233,7 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Crear inspiración"
+        android:text="@string/option_name_create_inspiration"
         />
         <TextView
             android:id="@+id/tvStartAgain"
@@ -248,7 +247,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="Empezar de nuevo"
+            android:text="@string/option_name_start_again"
             />
     </LinearLayout>
     </LinearLayout>

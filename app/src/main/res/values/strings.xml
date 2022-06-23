@@ -12,4 +12,18 @@
     <string name="action_create_inspiration_message">Si no logra avanzar en los objetivos, cree inspiraciones para motivarse a seguir.</string>
     <string name="question_delete_all">¿Está seguro?</string>
     <string name="explanation_delete_all">Se eliminarán todos los datos ingresados para iniciar el proceso desde cero.</string>
+    <string name="title_my_goals">MIS OBJETIVOS</string>
+    <string name="message_no_goals_selected">No seleccionaste ningún objetivo.</string>
+    <string name="title_actions">ACCIONES</string>
+    <string name="option_name_register_advance">Registrar avance</string>
+    <string name="option_name_remove_obstacle">Eliminar obstáculo</string>
+    <string name="option_name_admin_obstacles">Administrar Obstáculos</string>
+    <string name="title_configuration">CONFIGURACIÓN</string>
+    <string name="option_name_select_goals">Elegir Objetivos</string>
+    <string name="option_name_create_inspiration">Crear inspiración</string>
+    <string name="option_name_start_again">Empezar de nuevo</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Contraseña</string>
+    <string name="btn_label_register">REGISTRARSE</string>
+    <string name="btn_label_login">INGRESAR</string>
 </resources>

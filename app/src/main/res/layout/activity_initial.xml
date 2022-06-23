@@ -14,5 +14,4 @@
         android:src="@drawable/logo"
         android:layout_gravity="center"
         />
-
 </LinearLayout>

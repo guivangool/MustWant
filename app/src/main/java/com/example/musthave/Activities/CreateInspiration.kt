@@ -161,7 +161,6 @@ class CreateInspiration : AppCompatActivity() {
     val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
-                //val imageBachground: ImageView = findViewById(R.id.iv_GoalImage)
                 val imageBachground: ImageView? = binding?.ivGoalImage
                 imageBachground?.setImageURI(result.data?.data)
             }

@@ -33,10 +33,9 @@ class MainActivity : AppCompatActivity() {
     private var goalAdapter: MyGoalsAdapter? = null
     private var hasToUpdate = false
     private var selectedGoal = 0
-
-    var goalList = ArrayList<Int>()
-    var myGoalList = ArrayList<MyGoal>()
-    var isNew = true
+    private var goalList = ArrayList<Int>()
+    private var myGoalList = ArrayList<MyGoal>()
+    private var isNew = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
