@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/white"
-        app:title="INSPIRACIONES"
+        app:title="@string/ACTIVITY_TITLE_INSPIRATIONS"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="Seleccione objetivo"
+            android:text="@string/ACTIVITY_LABEL_SELECT_GOAL"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Ingrese frase"
+            android:text="@string/ACTIVITY_LABEL_INSERT_PHRASE"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/rgSelectedGoals" />
@@ -131,7 +131,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#6ABB6F"
-                android:text="Aceptar"
+                android:text="@string/ACTIVITY_LABEL_ACCEPT_BTN"
                 android:textColor="@color/white"
                 android:textSize="@dimen/btn_text_size" />
 
@@ -142,7 +142,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#6ABB6F"
-                android:text="Cancelar"
+                android:text="@string/ACTIVITY_LABEL_CANCEL_BTN"
                 android:textColor="@color/white"
                 android:textSize="@dimen/btn_text_size"
                 android:textStyle="bold" />

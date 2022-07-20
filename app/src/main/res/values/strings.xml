@@ -32,4 +32,11 @@
     <string name="APPLICATION_NAME">Must|Want App</string>
     <string name="NEEDS_ACCESS_EXTERNAL_STORAGE_MESSAGE">needs to Access Your External Storage</string>
     <string name="IMAGES_DIRECTORY_NAME">images</string>
+    <string name="ACTIVITY_TITLE_INSPIRATIONS">INSPIRACIONES</string>
+    <string name="ACTIVITY_LABEL_SELECT_GOAL">Seleccione objetivo</string>
+    <string name="ACTIVITY_LABEL_INSERT_PHRASE">Ingrese frase</string>
+    <string name="ACTIVITY_LABEL_ACCEPT_BTN">Aceptar</string>
+    <string name="ACTIVITY_LABEL_CANCEL_BTN">Cancelar</string>
+
+
 </resources>
