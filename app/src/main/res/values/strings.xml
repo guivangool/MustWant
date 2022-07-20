@@ -37,6 +37,16 @@
     <string name="ACTIVITY_LABEL_INSERT_PHRASE">Ingrese frase</string>
     <string name="ACTIVITY_LABEL_ACCEPT_BTN">Aceptar</string>
     <string name="ACTIVITY_LABEL_CANCEL_BTN">Cancelar</string>
+    <string name="ACTIVITY_TITLE_OBSTACLES_LIST">TAREAS/OBLIGACIONES</string>
+    <string name="ACTIVITY_TITLE_PROGRESS_GOALS">REGISTRE EL AVANCE (=, + , -)</string>
+    <string name="ACTIVITY_TITLE_PROGRESS_GOALS_LIST">REGISTROS:</string>
+    <string name="ACTIVITY_TITLE_REMOVE_OBSTACLE">CREAR TAREAS</string>
+    <string name="ACTIVITY_HINT_OBSTACLE_NAME">¿Qué tenes que hacer y cuando?</string>
+    <string name="ACTIVITY_TITLE_SELEC_GOALS">SELECCIONE LOS OBJETIVOS</string>
+    <string name="ACTIVITY_LABEL_YES_BTN">Si</string>
+    <string name="ACTIVITY_LABEL_NO_BTN">No</string>
+    <string name="RADIO_BTN_OPTION_PENDING">Pendiente</string>
+    <string name="RADIO_BTN_OPTION_COMPLETE">Finalizada</string>
 
 
 </resources>

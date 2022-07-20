@@ -4,7 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_create_inspiration.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_initial.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_login.xml" value="0.215625" />
         <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_main.xml" value="0.23541666666666666" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_obstacle_list.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_progress_goals.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_progress_goals_list.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_remove_obstacle.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/activity_select_goals.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/custom_dialog_accept_cancel.xml" value="0.4" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/goal.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/obstacle.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/progress_goal.xml" value="0.215625" />
+        <entry key="..\:/Proyectos/MustWant/app/src/main/res/layout/progress_goal_list.xml" value="0.215625" />
         <entry key="..\:/Proyectos/ProyectoMustWant/app/src/main/res/drawable/backgroung_panel_transparent.xml" value="0.21944444444444444" />
         <entry key="..\:/Proyectos/ProyectoMustWant/app/src/main/res/layout/activity_create_inspiration.xml" value="0.2" />
         <entry key="..\:/Proyectos/ProyectoMustWant/app/src/main/res/layout/activity_main.xml" value="0.2" />

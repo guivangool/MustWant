@@ -13,7 +13,7 @@
       android:layout_height="?android:attr/actionBarSize"
       app:layout_constraintTop_toTopOf="parent"
       android:background="@color/white"
-      app:title="CREAR TAREAS"/>
+      app:title="@string/ACTIVITY_TITLE_REMOVE_OBSTACLE"/>
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/clRemoveObstacle"
@@ -49,7 +49,7 @@
           android:layout_marginTop="10dp"
           android:maxLength="15"
           android:textSize="16sp"
-          android:hint="¿Qué tenes que hacer y cuando?'"/>
+          android:hint="@string/ACTIVITY_HINT_OBSTACLE_NAME"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <DatePicker
@@ -79,7 +79,7 @@
           android:layout_marginRight="10dp"
           android:layout_marginLeft="15dp"
           android:layout_weight="1"
-          android:text="ACEPTAR"
+          android:text="@string/ACTIVITY_LABEL_ACCEPT_BTN"
           android:textColor="@color/white"
           android:textSize="@dimen/btn_text_size"
           android:backgroundTint="@color/green_button"
@@ -91,7 +91,7 @@
           android:layout_marginRight="10dp"
           android:layout_marginLeft="15dp"
           android:layout_weight="1"
-          android:text="CANCELAR"
+          android:text="@string/ACTIVITY_LABEL_CANCEL_BTN"
           android:textColor="@color/white"
           android:textSize="@dimen/btn_text_size"
           android:backgroundTint="@color/green_button"/>
