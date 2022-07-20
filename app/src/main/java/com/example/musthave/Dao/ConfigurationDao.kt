@@ -13,7 +13,7 @@ interface ConfigurationDao {
     suspend fun update(configurationEntity: ConfigurationEntity)
 
     @Query("SELECT * FROM 'configuration_table' WHERE id = :id")
-    fun getConfiguration(id: Int): kotlinx.coroutines.flow.Flow<ConfigurationEntity>
+    suspend fun getConfiguration(id: Int): ConfigurationEntity
 
     @Query("DELETE FROM 'configuration_table'")
     suspend fun deleteAllConfiguration()

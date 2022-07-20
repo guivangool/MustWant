@@ -26,4 +26,10 @@
     <string name="label_password">Contraseña</string>
     <string name="btn_label_register">REGISTRARSE</string>
     <string name="btn_label_login">INGRESAR</string>
+    <string name="CREATE_INSPIRATION_SET_FIELDS_VALIDATION">Debe ingresar una frase y una imagen para crear la inspiración</string>
+    <string name="PERMISSIONS_GRANTED_EXTERNAL_STORAGE_MESSAGE">Permisos otorgados para escribir en almacenamiento externo.</string>
+    <string name="PERMISSIONS_DENIED_EXTERNAL_STORAGE_MESSAGE">Permisos denegados para escribir en almacenamiento externo.</string>
+    <string name="APPLICATION_NAME">Must|Want App</string>
+    <string name="NEEDS_ACCESS_EXTERNAL_STORAGE_MESSAGE">needs to Access Your External Storage</string>
+    <string name="IMAGES_DIRECTORY_NAME">images</string>
 </resources>

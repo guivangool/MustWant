@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.GoalProgressEntity
+import com.example.musthave.Enums.GoalType
 import com.example.musthave.MustWantApp
 import com.example.musthave.ProgressGoalsListAdapter
 import com.example.musthave.databinding.ActivityProgressGoalsListBinding
@@ -31,12 +32,8 @@ class ProgressGoalsList : AppCompatActivity() {
         binding?.tbProgressGoalsList?.setNavigationOnClickListener {
             onBackPressed()
         }
-
         setRecyclerView()
-
-
         loadProgressGoals(getIntent().getIntExtra("selectedGoal",0))
-
     }
 
     private fun setRecyclerView() {
@@ -54,13 +51,7 @@ class ProgressGoalsList : AppCompatActivity() {
     private fun loadProgressGoals(goalId:Int) {
         var progressGoalList = ArrayList<GoalProgressEntity>()
         binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString()  +
-                when (goalId)
-                {
-                    1-> "YO"
-                    2-> "HOGAR"
-                    3-> "TRABAJO"
-                    else -> "RELACIONES"
-                }
+                GoalType.values().find { it.number == goalId }?.label
 
         val progressGoalsListDao = (application as MustWantApp).db.goalProgressDao()
         //Load obstacles from database
@@ -71,9 +62,6 @@ class ProgressGoalsList : AppCompatActivity() {
                     progressGoalsListAdapter.submitList(progressGoalList)
                 }
             }
-
-
-
         }
     }
 }

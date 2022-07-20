@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.GoalProgressEntity
+import com.example.musthave.Enums.GoalType
 import com.example.musthave.GoalProgressAdapter
 import com.example.musthave.MustWantApp
 import com.example.musthave.databinding.ActivityProgressGoalsBinding
@@ -75,16 +76,16 @@ class ProgressGoals : AppCompatActivity() {
         goalProgressAdapter.setOnClickListener(object : GoalProgressAdapter.OnClickListener {
             override fun onCLick(goal: String, stateGoal: Int) {
                 when (goal) {
-                    "Yo" -> {
+                    GoalType.ME.label -> {
                         stateGoalMe = stateGoal
                     }
-                    "Trabajo" -> {
+                    GoalType.WORK.label -> {
                         stateGoalWork = stateGoal
                     }
-                    "Hogar" -> {
+                    GoalType.HOME.label -> {
                         stateGoalHome = stateGoal
                     }
-                    "Relaciones" -> {
+                    GoalType.RELATIONS.label -> {
                         stateGoalRelations = stateGoal
                     }
                 }
@@ -123,10 +124,10 @@ class ProgressGoals : AppCompatActivity() {
     private fun getCurrentState(goalId: Int): Int {
         var result = 0
         when (goalId) {
-            1 -> result = stateGoalMe
-            2 -> result = stateGoalHome
-            3 -> result = stateGoalWork
-            4 -> result = stateGoalRelations
+            GoalType.ME.number -> result = stateGoalMe
+            GoalType.HOME.number -> result = stateGoalHome
+            GoalType.WORK.number -> result = stateGoalWork
+            GoalType.RELATIONS.number -> result = stateGoalRelations
         }
         if (result == 2) result = -1
         return result

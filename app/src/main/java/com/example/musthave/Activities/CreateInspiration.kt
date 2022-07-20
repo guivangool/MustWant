@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.musthave.DataEntities.InspirationEntity
+import com.example.musthave.Enums.GoalType
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
 import com.example.musthave.databinding.ActivityCreateInspirationBinding
@@ -78,13 +79,7 @@ class CreateInspiration : AppCompatActivity() {
                 binding?.ivGoalImage?.setImageDrawable(null)
                 val radio: RadioButton = findViewById(checkedId)
                 loadInspiration(
-                    when (radio.text) {
-                        "Yo" -> 1
-                        "Hogar" -> 2
-                        "Trabajo" -> 3
-                        "Relaciones" -> 4
-                        else -> 0
-                    }
+                   GoalType.values().find { it.label == radio.text}?.number
                 )
             })
 
@@ -103,13 +98,7 @@ class CreateInspiration : AppCompatActivity() {
                     if (isNew) {
                         val radioButtonSelected =
                             findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                        val goalID: Int = when (radioButtonSelected.text) {
-                            "Yo" -> 1
-                            "Hogar" -> 2
-                            "Trabajo" -> 3
-                            "Relaciones" -> 4
-                            else -> 0
-                        }
+                        var goalID = GoalType.values().find {it.label == radioButtonSelected.text}?.number as Int
                         inspirationDao.insert(
                             InspirationEntity(
                                 null,
@@ -134,14 +123,14 @@ class CreateInspiration : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "Debe ingresar una frase y una imagen para crear la inspiración",
+                    getString(R.string.CREATE_INSPIRATION_SET_FIELDS_VALIDATION),
                     Toast.LENGTH_LONG
                 ).show()
             }
         }
     }
 
-    private fun loadInspiration(goalId: Int) {
+    private fun loadInspiration(goalId: Int?) {
         val inspirationDao = (application as MustWantApp).db.inspitationDao()
         //Load image from first goal
         lifecycleScope.launch {
@@ -176,7 +165,7 @@ class CreateInspiration : AppCompatActivity() {
                 if (isGranted) {
                     Toast.makeText(
                         this,
-                        "Permission granted for write external storage.",
+                        getString(R.string.PERMISSIONS_GRANTED_EXTERNAL_STORAGE_MESSAGE),
                         Toast.LENGTH_LONG
                     ).show()
                     val pickIntent =
@@ -187,7 +176,7 @@ class CreateInspiration : AppCompatActivity() {
                     if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
                         Toast.makeText(
                             this,
-                            "Permission denies for read external storage.",
+                            getString(R.string.PERMISSIONS_DENIED_EXTERNAL_STORAGE_MESSAGE),
                             Toast.LENGTH_LONG
                         ).show()
 
@@ -219,8 +208,8 @@ class CreateInspiration : AppCompatActivity() {
         ) {
             //call the rationale dialog to tell the user why they need to allow permission request
             showRationaleDialog(
-                "Must|Want App", "Must|Want App " +
-                        "needs to Access Your External Storage"
+                getString(R.string.APPLICATION_NAME), getString(R.string.APPLICATION_NAME) + " "
+                        + getString(R.string.NEEDS_ACCESS_EXTERNAL_STORAGE_MESSAGE)
             )
         } else {
             // You can directly ask for the permission.
@@ -278,7 +267,7 @@ class CreateInspiration : AppCompatActivity() {
 
         // Initializing a new file
         // The bellow line return a directory in internal storage
-        var file = wrapper.getDir("images", Context.MODE_PRIVATE)
+        var file = wrapper.getDir(getString(R.string.IMAGES_DIRECTORY_NAME), Context.MODE_PRIVATE)
 
 
         // Create a file to save the image

@@ -19,5 +19,5 @@ interface ObstacleDao {
     suspend fun updateStatus (obstacleStatus:ObstacleStatus)
 
     @Query("SELECT * FROM 'obstacle_table' order by status asc,planedDate asc ")
-    fun getAll(): kotlinx.coroutines.flow.Flow<List<ObstacleEntity>>
+    suspend fun getAll(): List<ObstacleEntity>
 }

@@ -22,8 +22,8 @@ interface GoalProgressDao {
     fun getAllByGoal(goalId: Int): Flow<List<GoalProgressEntity>>
 
    @Query("SELECT *,sum(goalProgress) as totalProgress FROM 'goal_progress_table' group by progressDate,goalId order by progressDate asc")
-   fun getAllTotalProgress(): Flow<List<GoalProgressEntity>>
+   suspend fun getAllTotalProgress(): List<GoalProgressEntity>
 
     @Query("SELECT count(*) FROM 'goal_progress_table' WHERE progressDate >= :yesterday ")
-    suspend fun getAllFromYesterday(yesterday: Date): Int
+     fun getAllFromYesterday(yesterday: Date): Flow<Int>
 }
