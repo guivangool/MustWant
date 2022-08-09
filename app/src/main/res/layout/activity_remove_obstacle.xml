@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+  <data>
+    <variable
+        name="obstacleViewModel"
+        type="com.example.musthave.viewModels.ObstacleViewModel" />
+  </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Activities.RemoveObstacle"
     android:background="@color/green_background_initial">
-
   <androidx.appcompat.widget.Toolbar
       android:id="@+id/tbRemoveObstacle"
       android:layout_width="match_parent"
@@ -49,7 +57,9 @@
           android:layout_marginTop="10dp"
           android:maxLength="15"
           android:textSize="16sp"
-          android:hint="@string/ACTIVITY_HINT_OBSTACLE_NAME"/>
+          android:text="@={obstacleViewModel.description}"
+          android:hint="@string/ACTIVITY_HINT_OBSTACLE_NAME"
+          />
     </com.google.android.material.textfield.TextInputLayout>
 
     <DatePicker
@@ -61,7 +71,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tilObstacle"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
-
+        android:year="@={obstacleViewModel.year}"
+        android:month="@={obstacleViewModel.month}"
+        android:day="@={obstacleViewModel.day}"
         />
 
     <LinearLayout
@@ -98,3 +110,4 @@
     </LinearLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

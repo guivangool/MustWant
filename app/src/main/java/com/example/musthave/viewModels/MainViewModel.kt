@@ -1,17 +1,10 @@
-package com.example.musthave.ViewModels
+package com.example.musthave.viewModels
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.*
-import com.example.musthave.DataEntities.ConfigurationEntity
 import com.example.musthave.MustWantApp
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import com.example.musthave.*
-import com.example.musthave.Dao.ConfigurationDao
-import com.example.musthave.DataEntities.GoalProgressEntity
 import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.DomainEntities.MyGoal
@@ -20,7 +13,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-class MainViewModel (application: Application):AndroidViewModel(application) {
+class MainViewModel (application: Application) : AndroidViewModel(application) {
     private var _configuration = MutableLiveData<Configuration>()
     private var _mainMessage = MutableLiveData<MainMessage>()
 
@@ -137,7 +130,7 @@ class MainViewModel (application: Application):AndroidViewModel(application) {
                     {
                         val inspirationDao = (application as MustWantApp).db.inspitationDao()
                         viewModelScope.launch {
-                            inspirationDao.getAllGoalInspiration().collect {
+                            var it = inspirationDao.getAllGoalInspiration()
                                 if (it != null && it.size > 0) {
                                     var random = 0
                                     if (it.size > 1)
@@ -153,7 +146,6 @@ class MainViewModel (application: Application):AndroidViewModel(application) {
                                     message.messageNumber = 3
                                     _mainMessage.postValue(message)
                                 }
-                            }
                         }
                     }
                 }

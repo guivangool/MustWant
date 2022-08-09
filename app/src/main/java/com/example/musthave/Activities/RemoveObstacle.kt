@@ -1,19 +1,18 @@
 package com.example.musthave.Activities
 
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isNotEmpty
-import androidx.lifecycle.lifecycleScope
-import com.example.musthave.DataEntities.ObstacleEntity
+import androidx.lifecycle.ViewModelProvider
 import com.example.musthave.MustWantApp
+import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.databinding.ActivityRemoveObstacleBinding
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.musthave.viewModels.ObstacleViewModel
+import com.example.musthave.Factories.ObstacleViewModelFactory
 
 class RemoveObstacle : AppCompatActivity() {
     var binding: ActivityRemoveObstacleBinding? = null
+    private lateinit var obstacleViewModel: ObstacleViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,11 +20,17 @@ class RemoveObstacle : AppCompatActivity() {
         binding = ActivityRemoveObstacleBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        //Set back button to the Acion Bar
+        //DataBinding - ViewModel
+        val obstacleDao = (application as MustWantApp).db.obstacleDao()
+        val repository = ObstacleRepository(obstacleDao)
+        val factory = ObstacleViewModelFactory(repository)
+        obstacleViewModel = ViewModelProvider(this,factory).get(ObstacleViewModel::class.java)
+        binding?.obstacleViewModel = obstacleViewModel
+        binding?.lifecycleOwner = this
+
+        //Set back button in the Action Bar
         setSupportActionBar(binding?.tbRemoveObstacle)
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding?.tbRemoveObstacle?.setNavigationOnClickListener {
             onBackPressed()
@@ -38,37 +43,8 @@ class RemoveObstacle : AppCompatActivity() {
             finish()
         }
         binding?.btnAccept?.setOnClickListener {
-            var datePicker: DatePicker? = binding?.dpObstacle
-
-            if (binding!!.etSetObstacleName?.text!!.isNotEmpty()
-                && datePicker!!.isNotEmpty()
-            ) {
-                var year = datePicker.year
-                var month = datePicker.month
-                var day = datePicker.dayOfMonth
-
-                var calendar = Calendar.getInstance()
-                calendar.set(year, month, day)
-
-                var date = SimpleDateFormat(
-                    "yyyyMMdd",
-                    Locale.getDefault()
-                ).format(calendar.time)
-
-                lifecycleScope.launch {
-                    val obstacleDao = (application as MustWantApp).db.obstacleDao()
-                    obstacleDao.insert(
-
-                        ObstacleEntity(
-                            null,
-                            binding!!.etSetObstacleName?.text.toString(),
-                            date,
-                            calendar.time,
-                        0)
-                        )
-                }
-            }
-            finish()
+            //Send a callback function by parameter to be executed after the INSERT
+            obstacleViewModel.insert({finish()})
         }
     }
 }

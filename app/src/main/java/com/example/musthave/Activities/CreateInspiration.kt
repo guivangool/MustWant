@@ -23,26 +23,37 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.musthave.DataEntities.InspirationEntity
 import com.example.musthave.Enums.GoalType
+import com.example.musthave.Factories.InspirationViewModelFactory
+import com.example.musthave.Factories.ObstacleViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
+import com.example.musthave.Repositories.InspirationRepository
+import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.databinding.ActivityCreateInspirationBinding
+import com.example.musthave.viewModels.InspirationViewModel
+import com.example.musthave.viewModels.ObstacleViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CreateInspiration : AppCompatActivity() {
+
     private var binding: ActivityCreateInspirationBinding? = null
     private var goalList = ArrayList<Int>()
+    private lateinit var inspirationList : List<InspirationEntity>
     private var isNew = true
     private var currentInspiration: InspirationEntity? = null
+    private lateinit var inspirationViewModel: InspirationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,17 +64,36 @@ class CreateInspiration : AppCompatActivity() {
 
         //Action Bar
         setSupportActionBar(binding?.tbCreateInspiration)
-
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-        binding?.tbCreateInspiration?.setNavigationOnClickListener {
-            onBackPressed()
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         createRadioButtons()
 
-        loadInspiration(goalList[0])
+        //Create ViewModel
+        //Dao
+        val inspirationDao = (application as MustWantApp).db.inspitationDao()
+        //Repository
+        val repository = InspirationRepository(inspirationDao)
+        //Factory
+        val factory = InspirationViewModelFactory(repository)
+        //ViewModel
+        inspirationViewModel =
+            ViewModelProvider(this, factory).get(InspirationViewModel::class.java)
+        //binding?.obstacleViewModel = obstacleViewModel
+        //binding?.lifecycleOwner = this
+
+        //Observe ViewModel
+        inspirationViewModel.inspirations.observe(
+            this,
+            androidx.lifecycle.Observer { inspirations ->
+                this.inspirationList = inspirations
+
+                loadInspiration(goalList[0])
+
+            })
+
+        binding?.tbCreateInspiration?.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         binding?.fabLoadPicture?.setOnClickListener {
             requestStoragePermission()
@@ -79,47 +109,40 @@ class CreateInspiration : AppCompatActivity() {
                 binding?.ivGoalImage?.setImageDrawable(null)
                 val radio: RadioButton = findViewById(checkedId)
                 loadInspiration(
-                   GoalType.values().find { it.label == radio.text}?.number
+                    GoalType.values().find { it.label == radio.text }?.number
                 )
             })
 
         binding?.btnCancel?.setOnClickListener {
             finish()
         }
+
         binding?.btnAccept?.setOnClickListener {
             var message = binding?.etSetPhrase?.text?.toString()
+
             if (binding?.etSetPhrase?.text?.toString() != "" &&
                 binding?.ivGoalImage?.drawable != null
             ) {
                 val filePath = saveImageToInternalStorage(binding?.ivGoalImage?.drawable)
-                lifecycleScope.launch {
-                    val inspirationDao = (application as MustWantApp).db.inspitationDao()
 
-                    if (isNew) {
-                        val radioButtonSelected =
-                            findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                        var goalID = GoalType.values().find {it.label == radioButtonSelected.text}?.number as Int
-                        inspirationDao.insert(
-                            InspirationEntity(
-                                null,
-                                goalID,
-                                binding?.etSetPhrase?.text.toString(),
-                                filePath.toString()
-                            )
-                        )
-                    } else {
-                        inspirationDao.update(
-                            InspirationEntity(
-                                currentInspiration!!.id,
-                                currentInspiration!!.goalId,
-                                binding?.etSetPhrase?.text.toString(),
-                                filePath.toString()
-                            )
-                        )
-                    }
-                    finish()
+                //Update ViewModel Data
+                inspirationViewModel.image.value = filePath.toString()
+                inspirationViewModel.phrase.value = binding?.etSetPhrase?.text.toString()
+
+                if (isNew) {
+                    val radioButtonSelected =
+                        findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
+                    var goalID = GoalType.values().find { it.label == radioButtonSelected.text }?.number as Int
+                    //Update ViewModel Data for INSERT
+                    inspirationViewModel.goalId.value = goalID
+                    inspirationViewModel.insert()
+                } else {
+                    //Update ViewModel Data for UPDATE
+                    inspirationViewModel.id.value = currentInspiration!!.id
+                    inspirationViewModel.goalId.value = currentInspiration!!.goalId
+                    inspirationViewModel.update()
                 }
-
+                finish()
             } else {
                 Toast.makeText(
                     this,
@@ -131,18 +154,15 @@ class CreateInspiration : AppCompatActivity() {
     }
 
     private fun loadInspiration(goalId: Int?) {
-        val inspirationDao = (application as MustWantApp).db.inspitationDao()
-        //Load image from first goal
-        lifecycleScope.launch {
-            inspirationDao.getGoalInspiration(goalId).collect {
-                if (it != null) {
-                    var bitmap: Bitmap = BitmapFactory.decodeFile(it.image)
-                    binding?.ivGoalImage?.setImageBitmap(bitmap)
-                    binding?.etSetPhrase?.setText(it.phrase.toString())
-                    currentInspiration = it
-                    isNew = false
-                } else
-                    isNew = true
+        if (!inspirationList.isEmpty()) {
+            currentInspiration = inspirationList.find { it.goalId == goalId }
+            if (currentInspiration != null) {
+                var bitmap: Bitmap = BitmapFactory.decodeFile(currentInspiration?.image)
+                binding?.ivGoalImage?.setImageBitmap(bitmap)
+                binding?.etSetPhrase?.setText(currentInspiration?.phrase.toString())
+                isNew = false
+            } else {
+                isNew = true
             }
         }
     }
@@ -231,13 +251,7 @@ class CreateInspiration : AppCompatActivity() {
 
         for (goal in goalList) {
             val radioButton = RadioButton(this)
-            radioButton.text = when (goal) {
-                1 -> "Yo"
-                2 -> "Hogar"
-                3 -> "Trabajo"
-                4 -> "Relaciones"
-                else -> ""
-            }
+            radioButton.text = GoalType.values().find { it.number == goal }?.label
 
             //Set properties
             radioButton.setBackgroundResource(R.drawable.radio_button_background)
@@ -253,7 +267,6 @@ class CreateInspiration : AppCompatActivity() {
             //Add to the radio group
             binding?.rgSelectedGoals?.addView(radioButton)
             binding?.rgSelectedGoals?.check((binding?.rgSelectedGoals?.getChildAt(0) as RadioButton).id)
-
         }
     }
 
@@ -268,7 +281,6 @@ class CreateInspiration : AppCompatActivity() {
         // Initializing a new file
         // The bellow line return a directory in internal storage
         var file = wrapper.getDir(getString(R.string.IMAGES_DIRECTORY_NAME), Context.MODE_PRIVATE)
-
 
         // Create a file to save the image
         file = File(file, "${UUID.randomUUID()}.jpg")

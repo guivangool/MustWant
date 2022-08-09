@@ -16,8 +16,8 @@ interface InspirationDao {
     suspend fun update(inspirationEntity: InspirationEntity)
 
     @Query("SELECT * FROM 'goal_inspiration_table' WHERE goalId = :goalId")
-    fun getGoalInspiration(goalId: Int?): kotlinx.coroutines.flow.Flow<InspirationEntity>
+    suspend fun getGoalInspiration(goalId: Int?): InspirationEntity
 
     @Query("SELECT * FROM 'goal_inspiration_table'")
-    fun getAllGoalInspiration(): Flow<List<InspirationEntity>>
+    suspend fun getAllGoalInspiration(): List<InspirationEntity>
 }

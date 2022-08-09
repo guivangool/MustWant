@@ -16,8 +16,12 @@ import com.example.musthave.DataEntities.ObstacleEntity
 import com.example.musthave.TypeConverters.DateConverter
 
 @Database(
-    entities = [ConfigurationEntity::class, GoalProgressEntity::class,
-        InspirationEntity::class, ObstacleEntity::class], version = 18
+    entities = [
+        ConfigurationEntity::class,
+        GoalProgressEntity::class,
+        InspirationEntity::class,
+        ObstacleEntity::class],
+        version = 18
 )
 @TypeConverters(DateConverter::class)
 

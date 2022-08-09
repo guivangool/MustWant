@@ -1,10 +1,9 @@
-package com.example.musthave.ViewModels
+package com.example.musthave.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.musthave.DataEntities.ObstacleEntity
 import com.example.musthave.MustWantApp
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 

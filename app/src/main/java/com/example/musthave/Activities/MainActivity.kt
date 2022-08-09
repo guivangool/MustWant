@@ -17,14 +17,12 @@ import com.example.musthave.Adapters.MyGoalsAdapter
 import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalType
-import com.example.musthave.ViewModels.MainViewModel
+import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
 import com.example.musthave.databinding.CustomDialogAcceptCancelBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
