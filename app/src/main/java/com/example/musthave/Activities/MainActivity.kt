@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         //Observe View Model to show Selected Goals
         observeSelectedGoals()
 
-        //Observe mainMessage changes
+        //Observe View Model to show messages
         mainViewModel.mainMessage.observe(this, androidx.lifecycle.Observer { mainMessage ->
             showMessage(mainMessage)
         })
