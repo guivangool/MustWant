@@ -3,11 +3,12 @@ package com.example.musthave.Adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.MyGoal
 import com.example.musthave.Enums.GoalType
 import com.example.musthave.databinding.GoalBinding
 
-class MyGoalsAdapter(val items: ArrayList<MyGoal>) :
+class MyGoalsAdapter(val items: ArrayList<GoalEntity>) :
     RecyclerView.Adapter<MyGoalsAdapter.ViewHolder>() {
 
     private var onClickListener: OnClickListener? = null

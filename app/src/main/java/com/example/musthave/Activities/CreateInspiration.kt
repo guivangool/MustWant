@@ -118,8 +118,6 @@ class CreateInspiration : AppCompatActivity() {
         }
 
         binding?.btnAccept?.setOnClickListener {
-            var message = binding?.etSetPhrase?.text?.toString()
-
             if (binding?.etSetPhrase?.text?.toString() != "" &&
                 binding?.ivGoalImage?.drawable != null
             ) {

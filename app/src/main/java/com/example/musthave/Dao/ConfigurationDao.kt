@@ -1,22 +1,25 @@
 package com.example.musthave.Dao
 
 import androidx.room.*
-import com.example.musthave.DataEntities.ConfigurationEntity
+import com.example.musthave.DataEntities.GoalEntity
 
 @Dao
 interface ConfigurationDao {
 
-    @Insert
-    suspend fun insert(configurationEntity: ConfigurationEntity)
+
+    @Query("SELECT * FROM 'goal_table'")
+    suspend fun getGoals(): List<GoalEntity>
+
+    @Query("SELECT * FROM 'goal_table' WHERE selected = :selected")
+    suspend fun getGoalsBySelection(selected:Boolean): List<GoalEntity>
 
     @Update
-    suspend fun update(configurationEntity: ConfigurationEntity)
+    suspend fun updateGoal (goal: GoalEntity)
 
-    @Query("SELECT * FROM 'configuration_table' WHERE id = :id")
-    suspend fun getConfiguration(id: Int): ConfigurationEntity
+    @Insert
+    suspend fun insertGoal(goalEntity: GoalEntity)
 
-    @Query("DELETE FROM 'configuration_table'")
-    suspend fun deleteAllConfiguration()
+
 
     @Query("DELETE FROM 'goal_inspiration_table'")
     suspend fun deleteAllInspirations()
@@ -27,13 +30,16 @@ interface ConfigurationDao {
     @Query("DELETE FROM 'obstacle_table'")
     suspend fun deleteAllObstacles()
 
+    @Query("DELETE FROM 'goal_table'")
+    suspend fun deleteAllGoals()
+
     @Transaction
     suspend fun deleteAllDatabaseData()
     {
         deleteAllObstacles()
         deleteAllInspirations()
         deleteAllGoalProgresses()
-        deleteAllConfiguration()
+        deleteAllGoals()
     }
 }
 

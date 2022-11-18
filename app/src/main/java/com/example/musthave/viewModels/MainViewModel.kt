@@ -2,6 +2,7 @@ package com.example.musthave.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.MustWantApp
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -9,57 +10,50 @@ import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.DomainEntities.MyGoal
 import com.example.musthave.Enums.GoalType
+import com.example.musthave.Repositories.MainRepository
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-class MainViewModel (application: Application) : AndroidViewModel(application) {
-    private var _configuration = MutableLiveData<Configuration>()
+class MainViewModel ( val repository:MainRepository) : ViewModel() {
+    val goalsSelection : MutableLiveData<List<GoalEntity>> = MutableLiveData<List<GoalEntity>>()
+
     private var _mainMessage = MutableLiveData<MainMessage>()
 
-    val configuration:LiveData<Configuration>
-        get() = _configuration
     val mainMessage:LiveData<MainMessage>
         get() = _mainMessage
 
     init {
-        loadConfiguration(application)
+        getSelectedGoals()
     }
 
-    fun loadConfiguration(application: Application) {
-        val configurationDao = (application as MustWantApp).db.configurationDao()
+    fun getSelectedGoals() {
         viewModelScope.launch {
-            val configurationData = configurationDao.getConfiguration(1)
-            val configuration = Configuration(ArrayList(),ArrayList(),configurationData == null)
-            if (configurationData != null) {
-                if (configurationData.goalMe) {
-                    configuration.selectedGoals.add(MyGoal(GoalType.ME.number,0))
-                    configuration.selectedGoalsInt.add(GoalType.ME.number)
+            var selectedGoals = repository.getSelectedGoals()
+            if (selectedGoals.size == 0) {
+                if (repository.getGoals().size == 0) {
+                    //Insert all goals (selected = false)
+                    repository.insertGoal(GoalEntity(GoalType.ME.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalType.HOME.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalType.RELATIONS.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalType.WORK.number, false,0))
                 }
-                if (configurationData.goalHome) {
-                    configuration.selectedGoals.add(MyGoal(GoalType.HOME.number,0))
-                    configuration.selectedGoalsInt.add(GoalType.HOME.number)
-                }
-                if (configurationData.goalWork) {
-                    configuration.selectedGoals.add(MyGoal(GoalType.WORK.number,0))
-                    configuration.selectedGoalsInt.add(GoalType.WORK.number)
-                }
-                if (configurationData.goalRelation) {
-                    configuration.selectedGoals.add(MyGoal(GoalType.RELATIONS.number,0))
-                    configuration.selectedGoalsInt.add(GoalType.RELATIONS.number)
-                }
-            } else {
-                configuration.isNew = true
             }
-            getPercentajes(application,configuration)
-            _configuration.value = configuration
-            _configuration.postValue(configuration)
-            setMainMessage(application)
+            getPercentajes(selectedGoals as ArrayList<GoalEntity> )
+            setMainMessage(selectedGoals as ArrayList<GoalEntity>)
         }
         }
 
-    fun getPercentajes(application: Application, configuration:Configuration) {
-        val goalProgressDao = (application as MustWantApp).db.goalProgressDao()
+    suspend fun deleteAll() {
+        viewModelScope.launch {
+            repository.deleteAll()
+            getSelectedGoals()
+        }
+    }
+
+
+    fun getPercentajes(selectedGoals: ArrayList<GoalEntity> ) {
+
         var substract = 0
         var percentajeMe = 0
         var percentajeHome = 0
@@ -67,7 +61,7 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
         var percentajeRelations = 0
 
         viewModelScope.launch {
-            val percentajesData = goalProgressDao.getAllTotalProgress()
+            val percentajesData = repository.goalProgressDao.getAllTotalProgress()
 
             for (goalProgressTotal in percentajesData) {
                 if (goalProgressTotal.totalProgress.compareTo(0) > 0)
@@ -89,37 +83,35 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
             if (percentajeWork < 0) percentajeWork = 0
             if (percentajeRelations < 0) percentajeRelations = 0
 
-
-            for (myGoal in configuration.selectedGoals) {
-                when (myGoal.goalId) {
-                    1 -> myGoal.goalPercentaje = percentajeMe
-                    2 -> myGoal.goalPercentaje = percentajeHome
-                    3 -> myGoal.goalPercentaje = percentajeWork
-                    4 -> myGoal.goalPercentaje = percentajeRelations
+            if (selectedGoals != null) {
+                for (goal in selectedGoals) {
+                    when (goal.goalId) {
+                        1 -> goal.goalPercentaje = percentajeMe
+                        2 -> goal.goalPercentaje = percentajeHome
+                        3 -> goal.goalPercentaje = percentajeWork
+                        4 -> goal.goalPercentaje = percentajeRelations
+                    }
                 }
             }
+            goalsSelection.postValue(selectedGoals)
         }
     }
     private fun rand(from: Int, to: Int) : Int {
         return Random.nextInt(to - from) + from
     }
 
-    fun setMainMessage (application: Application)
+    fun setMainMessage (selectedGoals: ArrayList<GoalEntity>)
     {
-        val goalProgressDao = (application as MustWantApp).db.goalProgressDao()
 
         val message = MainMessage(0,"","")
-
         viewModelScope.launch {
-
-
-            if (configuration.value?.selectedGoalsInt.isNullOrEmpty()) {
+            if (selectedGoals.size == 0) {
                 //The user did not select goals to achieve
                 message.messageNumber = 1
                 _mainMessage.postValue(message)
             }
             else {
-                goalProgressDao.getAllFromYesterday(getYesterdayDate()).collect{ progress ->
+                repository.getAllFromYesterday(getYesterdayDate()).collect{ progress ->
                     if (progress == 0)
                     {
                         //The user selected goals to achieve but the user did not progress them since the day before yesterday
@@ -128,9 +120,9 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
                     }
                     else
                     {
-                        val inspirationDao = (application as MustWantApp).db.inspitationDao()
+
                         viewModelScope.launch {
-                            var it = inspirationDao.getAllGoalInspiration()
+                            var it = repository.getAllGoalInspiration()
                                 if (it != null && it.size > 0) {
                                     var random = 0
                                     if (it.size > 1)

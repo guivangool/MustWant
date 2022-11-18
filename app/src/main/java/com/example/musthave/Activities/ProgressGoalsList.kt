@@ -2,19 +2,27 @@ package com.example.musthave.Activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.GoalProgressEntity
 import com.example.musthave.Enums.GoalType
+import com.example.musthave.Factories.ProgressGoalViewModelFactory
+import com.example.musthave.Factories.ProgressGoalsListViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.ProgressGoalsListAdapter
+import com.example.musthave.Repositories.ProgressGoalRepository
 import com.example.musthave.databinding.ActivityProgressGoalsListBinding
+import com.example.musthave.viewModels.ProgressGoalViewModel
+import com.example.musthave.viewModels.ProgressGoalsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ProgressGoalsList : AppCompatActivity() {
-    private var binding: ActivityProgressGoalsListBinding?= null
+    private var binding: ActivityProgressGoalsListBinding? = null
     private lateinit var progressGoalsListAdapter: ProgressGoalsListAdapter
+    private lateinit var progressGoalsListViewModel: ProgressGoalsListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +40,25 @@ class ProgressGoalsList : AppCompatActivity() {
         binding?.tbProgressGoalsList?.setNavigationOnClickListener {
             onBackPressed()
         }
+
+        //Create ViewModel
+        //Dao
+        val progressGoalDao = (application as MustWantApp).db.goalProgressDao()
+        //Repository
+        val repository = ProgressGoalRepository(progressGoalDao)
+        //Factory
+        val factory = ProgressGoalsListViewModelFactory(repository)
+        //ViewModel
+        progressGoalsListViewModel =
+            ViewModelProvider(this, factory).get(ProgressGoalsListViewModel::class.java)
+
+        //Observes ViewModel
+        progressGoalsListViewModel.progressGoalsList.observe(this, Observer { progressGoalsList ->
+            progressGoalsListAdapter.submitList(progressGoalsList)
+        })
+
         setRecyclerView()
-        loadProgressGoals(getIntent().getIntExtra("selectedGoal",0))
+        loadProgressGoals(getIntent().getIntExtra("selectedGoal", 0))
     }
 
     private fun setRecyclerView() {
@@ -42,26 +67,17 @@ class ProgressGoalsList : AppCompatActivity() {
         progressGoalsListAdapter = ProgressGoalsListAdapter()
         binding?.rvProgressGoalsList?.adapter = progressGoalsListAdapter
     }
-
     override fun onDestroy() {
         super.onDestroy()
         binding = null
     }
 
-    private fun loadProgressGoals(goalId:Int) {
-        var progressGoalList = ArrayList<GoalProgressEntity>()
-        binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString()  +
+    private fun loadProgressGoals(goalId: Int) {
+        binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString() +
                 GoalType.values().find { it.number == goalId }?.label
 
-        val progressGoalsListDao = (application as MustWantApp).db.goalProgressDao()
         //Load obstacles from database
-        lifecycleScope.launch {
-            progressGoalsListDao.getAllByGoal(goalId).collect {
-                if (it != null){
-                    progressGoalList = it as ArrayList<GoalProgressEntity>
-                    progressGoalsListAdapter.submitList(progressGoalList)
-                }
-            }
-        }
+        progressGoalsListViewModel.setProgressesByGoalId(goalId)
+
     }
 }

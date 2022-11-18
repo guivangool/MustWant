@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import com.example.musthave.DataEntities.ConfigurationEntity
+import androidx.lifecycle.ViewModelProvider
+import com.example.musthave.DataEntities.GoalEntity
+import com.example.musthave.Enums.GoalType
+import com.example.musthave.Factories.SelectGoalsViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
+import com.example.musthave.Repositories.SelectGoalsRepository
 import com.example.musthave.databinding.ActivitySelectGoalsBinding
-import kotlinx.coroutines.launch
+import com.example.musthave.viewModels.SelectGoalsViewModel
 
 
 class SelectGoals : AppCompatActivity() {
@@ -19,11 +22,11 @@ class SelectGoals : AppCompatActivity() {
     private var GoalHomeisSelected = false
     private var GoalRelationisSelected = false
     private var GoalWorkisSelected = false
+    private lateinit var selectGoalsViewModel: SelectGoalsViewModel
+    private var goals = ArrayList<GoalEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val configurationDao = (application as MustWantApp).db.configurationDao()
 
         //Binding
         binding = ActivitySelectGoalsBinding.inflate(layoutInflater)
@@ -39,31 +42,43 @@ class SelectGoals : AppCompatActivity() {
             onBackPressed()
         }
 
-        var goalList: ArrayList<Int> = getIntent().extras!!.get("goalList") as ArrayList<Int>
-        var isNew: Boolean = getIntent().getBooleanExtra("isNew", false)
+        //Create ViewModel
+        //Dao
+        val configurationDao = (application as MustWantApp).db.configurationDao()
 
-        for (goalSelected in goalList) {
-            when (goalSelected) {
-                1 -> {
-                    selectedGoal(binding?.GoalMe as TextView, true)
-                    GoalMeisSelected = true
-                }
-                2 -> {
-                    selectedGoal(binding?.GoalHome as TextView, true)
-                    GoalHomeisSelected = true
-                }
-                3 -> {
-                    selectedGoal(binding?.GoalWork as TextView, true)
-                    GoalWorkisSelected = true
-                }
-                4 -> {
-                    selectedGoal(binding?.GoalRelations as TextView, true)
-                    GoalRelationisSelected = true
-                }
-            }
-        }
+        //Repository
+        val repository = SelectGoalsRepository(configurationDao)
+        //Factory
+        val factory = SelectGoalsViewModelFactory(repository)
+        //ViewModel
+        selectGoalsViewModel =
+            ViewModelProvider(this, factory).get(SelectGoalsViewModel::class.java)
 
+        //Observe ViewModel
+        selectGoalsViewModel.goals.observe(this, androidx.lifecycle.Observer { goals ->
+                this.goals = goals as ArrayList<GoalEntity>
+                for (goal in goals) {
+                    when (goal.goalId) {
+                        GoalType.ME.number -> {
+                            selectedGoal(binding?.GoalMe as TextView, goal.selected)
+                            GoalMeisSelected = goal.selected
+                        }
+                        GoalType.HOME.number -> {
+                            selectedGoal(binding?.GoalHome as TextView, goal.selected)
+                            GoalHomeisSelected = goal.selected
+                        }
+                        GoalType.WORK.number -> {
+                            selectedGoal(binding?.GoalWork as TextView, goal.selected)
+                            GoalWorkisSelected = goal.selected
+                        }
+                        GoalType.RELATIONS.number -> {
+                            selectedGoal(binding?.GoalRelations as TextView, goal.selected)
+                            GoalRelationisSelected = goal.selected
+                        }
+                    }
+                }
 
+            })
 
         binding?.GoalMe?.setOnClickListener {
             GoalMeisSelected = !GoalMeisSelected
@@ -83,30 +98,10 @@ class SelectGoals : AppCompatActivity() {
         }
 
         binding?.btnConfirm?.setOnClickListener {
-
-            lifecycleScope.launch {
-                if (!isNew) {
-                    configurationDao.update(
-                        ConfigurationEntity(
-                            1,
-                            GoalMeisSelected,
-                            GoalHomeisSelected,
-                            GoalRelationisSelected,
-                            GoalWorkisSelected
-                        )
-                    )
-                } else {
-                    configurationDao.insert(
-                        ConfigurationEntity(
-                            1,
-                            GoalMeisSelected,
-                            GoalHomeisSelected,
-                            GoalRelationisSelected,
-                            GoalWorkisSelected
-                        )
-                    )
-                }
-            }
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.ME.number,GoalMeisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.HOME.number,GoalHomeisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.RELATIONS.number,GoalRelationisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.WORK.number,GoalWorkisSelected,0))
             finish()
         }
 

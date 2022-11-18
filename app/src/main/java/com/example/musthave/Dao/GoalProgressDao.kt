@@ -19,10 +19,10 @@ interface GoalProgressDao {
     suspend fun update(goalProgressEntity: GoalProgressEntity)
 
     @Query("SELECT *, 1 as totalProgress FROM 'goal_progress_table' WHERE goalID = :goalId order by progressDate asc")
-    fun getAllByGoal(goalId: Int): Flow<List<GoalProgressEntity>>
+    suspend fun getAllByGoal(goalId: Int): List<GoalProgressEntity>
 
    @Query("SELECT *,sum(goalProgress) as totalProgress FROM 'goal_progress_table' group by progressDate,goalId order by progressDate asc")
-   suspend fun getAllTotalProgress(): List<GoalProgressEntity>
+       suspend fun getAllTotalProgress(): List<GoalProgressEntity>
 
     @Query("SELECT count(*) FROM 'goal_progress_table' WHERE progressDate >= :yesterday ")
      fun getAllFromYesterday(yesterday: Date): Flow<Int>

@@ -14,16 +14,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.*
 import com.example.musthave.Adapters.MyGoalsAdapter
+import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalType
+import com.example.musthave.Factories.MainViewModelFactory
+import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
 import com.example.musthave.databinding.CustomDialogAcceptCancelBinding
 import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.collections.ArrayList
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,13 +33,9 @@ class MainActivity : AppCompatActivity() {
     private var hasToUpdate = false
     private var selectedGoal :Int? = 0
     private var goalList = ArrayList<Int>()
+    private var goalsSelection = ArrayList<GoalEntity>()
     private var isNew = true
-
-    //ViewModel
-    private val mainViewModel:MainViewModel by lazy()
-    {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+    private lateinit var mainViewModel: MainViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,20 +44,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        //Create ViewModel
+        //Daos
+        val configurationDao = (application as MustWantApp).db.configurationDao()
+        val goalProgressDao = (application as MustWantApp).db.goalProgressDao()
+        val inspirationDao = (application as MustWantApp).db.inspitationDao()
+        //Repository
+        val repository = MainRepository(configurationDao,goalProgressDao,inspirationDao)
+        //Factory
+        val factory = MainViewModelFactory(repository)
+        //ViewModel
+        mainViewModel =
+            ViewModelProvider(this, factory).get(MainViewModel::class.java)
+
         //Load Selected Goals
-        loadSelectedGoals()
+        observeSelectedGoals()
 
         //Observe mainMessage changes
         mainViewModel.mainMessage.observe(this, androidx.lifecycle.Observer { mainMessage ->
             showMessage(mainMessage)
         })
 
-            //Select goals button pressed
+        //Select goals button pressed
         binding?.tvSetGoalOption?.setOnClickListener {
             hasToUpdate = true
             val intent = Intent(this@MainActivity, SelectGoals::class.java)
-            intent.putExtra("goalList", goalList)
-            intent.putExtra("isNew", isNew)
             startActivity(intent)
         }
 
@@ -83,11 +91,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         //Remove Obstacle button pressed
         binding?.tvEmotion?.setOnClickListener {
             val intent = Intent(this@MainActivity, RemoveObstacle::class.java)
-            intent.putExtra("goalList", goalList)
             startActivity(intent)
         }
 
@@ -99,33 +105,40 @@ class MainActivity : AppCompatActivity() {
 
         //Start Again button pressed
         binding?.tvStartAgain?.setOnClickListener {
-            confirmDeleteAll()
+            confirmDeleteAll(repository)
         }
+
+        goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
+            override fun onCLick(goal: String) {
+                selectedGoal = GoalType.values().find {it.label == goal}?.number
+
+                val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
+                intent.putExtra("selectedGoal", selectedGoal)
+                startActivity(intent)
+            }
+        })
+
     }
+        //Ask user to confirm delete All
+         private fun confirmDeleteAll( repository: MainRepository) {
+            val customDialog = Dialog(this)
+            val dialogBinding = CustomDialogAcceptCancelBinding.inflate(layoutInflater)
 
-    //Ask user to confirm delete All
-    private fun confirmDeleteAll() {
-        val customDialog = Dialog(this)
-        val dialogBinding = CustomDialogAcceptCancelBinding.inflate(layoutInflater)
+            customDialog.setContentView(dialogBinding.root)
+            customDialog.setCanceledOnTouchOutside(false)
 
-        customDialog.setContentView(dialogBinding.root)
-        customDialog.setCanceledOnTouchOutside(false)
+            dialogBinding.btnYes.setOnClickListener {
+                lifecycleScope.launch {
+                  mainViewModel.deleteAll()
+                    customDialog.dismiss()
+                }
 
-        dialogBinding.btnYes.setOnClickListener {
-            val configurationDao = (application as MustWantApp).db.configurationDao()
-            lifecycleScope.launch {
-                configurationDao.deleteAllDatabaseData()
-                mainViewModel.loadConfiguration(application)
+            }
+            dialogBinding.btnNo.setOnClickListener {
                 customDialog.dismiss()
             }
-
+            customDialog.show()
         }
-        dialogBinding.btnNo.setOnClickListener{
-            customDialog.dismiss()
-        }
-        customDialog.show()
-
-    }
 
     private  fun showMessage(mainMessage: MainMessage) {
         when (mainMessage.messageNumber) {
@@ -155,47 +168,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     //fun that obtains selected goals from the database
-    private fun loadSelectedGoals() {
+    private fun observeSelectedGoals() {
         //Observe ViewModel
-        mainViewModel.configuration.observe(this, androidx.lifecycle.Observer { configuration ->
-            goalList = configuration.selectedGoalsInt
-            isNew = configuration.isNew
-
-            if (configuration.selectedGoalsInt.isNotEmpty())
-            {
-                //Show Goals List - Hide message
-                binding?.rvMyGoals?.visibility = View.VISIBLE
-                binding?.tvGoalsNotSelected?.visibility = View.GONE
-            }
-            else
+        mainViewModel.goalsSelection.observe(this, androidx.lifecycle.Observer { selectedGoalsData ->
+            goalsSelection = selectedGoalsData as ArrayList<GoalEntity>
+            if (goalsSelection.size == 0)
             {
                 //Hide Goals List - Show Message
                 binding?.rvMyGoals?.visibility = View.GONE
                 binding?.tvGoalsNotSelected?.visibility = View.VISIBLE
             }
+            else
+            {
+                //Show Goals List - Hide message
+                binding?.rvMyGoals?.visibility = View.VISIBLE
+                binding?.tvGoalsNotSelected?.visibility = View.GONE
+            }
 
-            setupMyGoalsRecyclerView(configuration)
+            setupMyGoalsRecyclerView(selectedGoalsData)
 
-            goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
-                override fun onCLick(goal: String) {
-                    selectedGoal = GoalType.values().find {it.label == goal}?.number
-
-                    val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
-                    intent.putExtra("selectedGoal", selectedGoal)
-                    startActivity(intent)
-                }
-            })
+            //TODO  - Remove goalList
+            goalList.clear()
+            for (goalSelected in goalsSelection )
+            {
+                goalList.add(goalSelected.goalId)
+            }
         })
     }
 
     //fun that set the data source to the list of goals (recycler VIew)
-    private fun setupMyGoalsRecyclerView(configuration: Configuration) {
-        //if (binding?.rvMyGoals?.layoutManager == null) {
+    private fun setupMyGoalsRecyclerView(selectedGoals: ArrayList<GoalEntity>) {
             binding?.rvMyGoals?.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            goalAdapter = MyGoalsAdapter(configuration.selectedGoals)
+            goalAdapter = MyGoalsAdapter(selectedGoals)
             binding?.rvMyGoals?.adapter = goalAdapter
-       // }
     }
 
     override fun onDestroy() {
@@ -207,13 +213,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (hasToUpdate) {
-            mainViewModel.loadConfiguration(application)
+            mainViewModel.getSelectedGoals()
             hasToUpdate = false
         }
     }
 
     private fun verifyGoalsSelected(): Boolean {
-        if (goalList.isEmpty()) {
+        if (goalsSelection.isEmpty()) {
             Toast.makeText(this, getString(R.string.messageNoGoalSelected), Toast.LENGTH_LONG)
                 .show()
             return false

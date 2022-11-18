@@ -7,22 +7,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.ObstacleStatus
+import com.example.musthave.Factories.ObstacleListViewModelFactory
+import com.example.musthave.Factories.ObstacleViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.ObstacleAdapter
+import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.viewModels.ObstacleListViewModel
 import com.example.musthave.databinding.ActivityObstacleListBinding
+import com.example.musthave.viewModels.ObstacleViewModel
 import kotlinx.coroutines.launch
 
 class ObstacleList : AppCompatActivity() {
     private var binding: ActivityObstacleListBinding? = null
     private lateinit var obstacleAdapter: ObstacleAdapter
-
-    //ViewModel
-    private val obstacleListViewModel:ObstacleListViewModel by lazy()
-    {
-        ViewModelProvider(this).get(ObstacleListViewModel::class.java)
-    }
-
+    private lateinit var obstacleListViewModel: ObstacleListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +30,12 @@ class ObstacleList : AppCompatActivity() {
         setContentView(binding?.root)
 
         setRecyclerView()
+
+        //DataBinding - ViewModel
+        val obstacleDao = (application as MustWantApp).db.obstacleDao()
+        val repository = ObstacleRepository(obstacleDao)
+        val factory = ObstacleListViewModelFactory(repository)
+        obstacleListViewModel = ViewModelProvider(this,factory).get(ObstacleListViewModel::class.java)
 
         //Observes ViewModel
         obstacleListViewModel.obstacleList.observe(this, Observer { obstacleList ->

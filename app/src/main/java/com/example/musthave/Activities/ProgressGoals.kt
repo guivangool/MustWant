@@ -2,13 +2,21 @@ package com.example.musthave.Activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.GoalProgressEntity
 import com.example.musthave.Enums.GoalType
+import com.example.musthave.Factories.InspirationViewModelFactory
+import com.example.musthave.Factories.ProgressGoalViewModelFactory
 import com.example.musthave.GoalProgressAdapter
 import com.example.musthave.MustWantApp
+import com.example.musthave.Repositories.InspirationRepository
+import com.example.musthave.Repositories.ObstacleRepository
+import com.example.musthave.Repositories.ProgressGoalRepository
 import com.example.musthave.databinding.ActivityProgressGoalsBinding
+import com.example.musthave.viewModels.InspirationViewModel
+import com.example.musthave.viewModels.ProgressGoalViewModel
 import kotlinx.coroutines.launch
 import java.sql.Array
 import java.util.*
@@ -26,6 +34,8 @@ class ProgressGoals : AppCompatActivity() {
     private var stateGoalHome = 0
     private var stateGoalRelations = 0
 
+    private lateinit var progressGoalViewModel: ProgressGoalViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,6 +49,18 @@ class ProgressGoals : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
+        //Create ViewModel
+        //Dao
+        val progressGoalDao = (application as MustWantApp).db.goalProgressDao()
+        //Repository
+        val repository = ProgressGoalRepository(progressGoalDao)
+        //Factory
+        val factory = ProgressGoalViewModelFactory(repository)
+        //ViewModel
+        progressGoalViewModel =
+            ViewModelProvider(this, factory).get(ProgressGoalViewModel::class.java)
+
+
         setRecyclerView()
         loadProgressGoals()
 
@@ -47,26 +69,16 @@ class ProgressGoals : AppCompatActivity() {
         }
 
         binding?.btnConfirm?.setOnClickListener {
-            lifecycleScope.launch {
-
                 val nowDate = getNowDate()
-
-                val goalProgressDao = (application as MustWantApp).db.goalProgressDao()
                 for (goal in goalProgressList) {
-                    goalProgressDao.insert(
-                        GoalProgressEntity(
-                            null,
-                            goal.goalID,
-                            nowDate,
-                            getCurrentState(goal.goalID),
-                            0
-                        )
-                    )
+                    progressGoalViewModel.goalId.value = goal.goalID
+                    progressGoalViewModel.progressDate.value = nowDate
+                    progressGoalViewModel.goalProgress.value = getCurrentState(goal.goalID)
+                    progressGoalViewModel.totalProgress.value = 0
+                    progressGoalViewModel.insert()
                 }
                 finish()
             }
-
-        }
 
         //Cancel button is pressed
         binding?.btnCancel?.setOnClickListener {
@@ -105,9 +117,7 @@ class ProgressGoals : AppCompatActivity() {
     }
 
     private fun loadProgressGoals() {
-        var goalList = ArrayList<Int>()
-
-        goalList = getIntent().extras?.get("goalList") as ArrayList<Int>
+        var goalList = getIntent().extras?.get("goalList") as ArrayList<Int>
 
         for (goal in goalList) {
             goalProgressList.add(GoalProgressEntity(null, goal,Date() ,0,0))

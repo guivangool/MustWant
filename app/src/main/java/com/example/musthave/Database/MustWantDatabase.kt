@@ -9,19 +9,16 @@ import com.example.musthave.Dao.ConfigurationDao
 import com.example.musthave.Dao.GoalProgressDao
 import com.example.musthave.Dao.InspirationDao
 import com.example.musthave.Dao.ObstacleDao
-import com.example.musthave.DataEntities.ConfigurationEntity
-import com.example.musthave.DataEntities.GoalProgressEntity
-import com.example.musthave.DataEntities.InspirationEntity
-import com.example.musthave.DataEntities.ObstacleEntity
+import com.example.musthave.DataEntities.*
 import com.example.musthave.TypeConverters.DateConverter
 
 @Database(
     entities = [
-        ConfigurationEntity::class,
         GoalProgressEntity::class,
         InspirationEntity::class,
-        ObstacleEntity::class],
-        version = 18
+        ObstacleEntity::class,
+        GoalEntity::class],
+        version = 24
 )
 @TypeConverters(DateConverter::class)
 
