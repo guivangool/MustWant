@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             showMessage(mainMessage)
         })
 
-        //Select goals button pressed
+        //User press "Select goals" button
         binding?.tvSetGoalOption?.setOnClickListener {
             hasToUpdate = true
             val intent = Intent(this@MainActivity, SelectGoals::class.java)
