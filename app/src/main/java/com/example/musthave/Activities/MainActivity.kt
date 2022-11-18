@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel =
             ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
-        //Load Selected Goals
+        //Observe View Model to show Selected Goals
         observeSelectedGoals()
 
         //Observe mainMessage changes
