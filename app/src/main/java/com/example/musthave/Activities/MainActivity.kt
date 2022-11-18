@@ -108,15 +108,7 @@ class MainActivity : AppCompatActivity() {
             confirmDeleteAll(repository)
         }
 
-        goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
-            override fun onCLick(goal: String) {
-                selectedGoal = GoalType.values().find {it.label == goal}?.number
 
-                val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
-                intent.putExtra("selectedGoal", selectedGoal)
-                startActivity(intent)
-            }
-        })
 
     }
         //Ask user to confirm delete All
@@ -186,7 +178,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             setupMyGoalsRecyclerView(selectedGoalsData)
+            goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
+                override fun onCLick(goal: String) {
+                    selectedGoal = GoalType.values().find {it.label == goal}?.number
 
+                    val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
+                    intent.putExtra("selectedGoal", selectedGoal)
+                    startActivity(intent)
+                }
+            })
             //TODO  - Remove goalList
             goalList.clear()
             for (goalSelected in goalsSelection )
