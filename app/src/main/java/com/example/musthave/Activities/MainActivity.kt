@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
-        //TEst
+        //TEst 4
         super.onCreate(savedInstanceState)
 
         //Binding
