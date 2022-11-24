@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musthave.DataEntities.ObstacleEntity
+import com.example.musthave.DataEntities.ObstacleStatus
 import com.example.musthave.Repositories.ObstacleRepository
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -44,4 +45,6 @@ class ObstacleViewModel (private val repository : ObstacleRepository) : ViewMode
             callback()
         }
     }
+
+
 }

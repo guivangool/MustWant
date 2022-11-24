@@ -44,7 +44,7 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
         }
         }
 
-    suspend fun deleteAll() {
+     fun deleteAll() {
         viewModelScope.launch {
             repository.deleteAll()
             getSelectedGoals()
