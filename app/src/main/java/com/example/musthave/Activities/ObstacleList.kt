@@ -4,18 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.ObstacleStatus
 import com.example.musthave.Factories.ObstacleListViewModelFactory
-import com.example.musthave.Factories.ObstacleViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.ObstacleAdapter
 import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.viewModels.ObstacleListViewModel
 import com.example.musthave.databinding.ActivityObstacleListBinding
-import com.example.musthave.viewModels.ObstacleViewModel
-import kotlinx.coroutines.launch
 
 class ObstacleList : AppCompatActivity() {
     private var binding: ActivityObstacleListBinding? = null
@@ -51,17 +47,11 @@ class ObstacleList : AppCompatActivity() {
         binding?.tbObstacles?.setNavigationOnClickListener {
             onBackPressed()
         }
-
         obstacleAdapter.setOnClickListener(object : ObstacleAdapter.OnClickListener {
             override fun onCLick(id: Int,status:Int) {
-                lifecycleScope.launch {
-                    val obstacleDao = (application as MustWantApp).db.obstacleDao()
-                    obstacleDao.updateStatus(
-                        ObstacleStatus(id, status)
-                    )
+                obstacleListViewModel.updateStatus(ObstacleStatus(id, status))
                 }
-            }
-        })
+            })
     }
 
     private fun setRecyclerView() {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.Repositories.SelectGoalsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SelectGoalsViewModel( val repository: SelectGoalsRepository) : ViewModel() {
@@ -20,7 +21,7 @@ class SelectGoalsViewModel( val repository: SelectGoalsRepository) : ViewModel()
     }
 
     fun getGoals() {
-        viewModelScope.launch{
+        viewModelScope.launch(){
             val goalsList = repository.getGoals()
             goals.postValue(goalsList)
         }

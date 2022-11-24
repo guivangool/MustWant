@@ -120,11 +120,8 @@ class MainActivity : AppCompatActivity() {
             customDialog.setCanceledOnTouchOutside(false)
 
             dialogBinding.btnYes.setOnClickListener {
-                lifecycleScope.launch {
-                  mainViewModel.deleteAll()
-                    customDialog.dismiss()
-                }
-
+                mainViewModel.deleteAll()
+                customDialog.dismiss()
             }
             dialogBinding.btnNo.setOnClickListener {
                 customDialog.dismiss()
