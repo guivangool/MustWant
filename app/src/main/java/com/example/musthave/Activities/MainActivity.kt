@@ -10,20 +10,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.*
 import com.example.musthave.Adapters.MyGoalsAdapter
 import com.example.musthave.DataEntities.GoalEntity
-import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
-import com.example.musthave.Enums.GoalType
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.MainViewModelFactory
 import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
 import com.example.musthave.databinding.CustomDialogAcceptCancelBinding
-import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private var selectedGoal :Int? = 0
     private var goalList = ArrayList<Int>()
     private var goalsSelection = ArrayList<GoalEntity>()
-    private var isNew = true
     private lateinit var mainViewModel: MainViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val factory = MainViewModelFactory(repository)
         //ViewModel
         mainViewModel =
-            ViewModelProvider(this, factory).get(MainViewModel::class.java)
+            ViewModelProvider(this,factory).get(MainViewModel::class.java)
 
         //Observe View Model to show Selected Goals
         observeSelectedGoals()
@@ -107,9 +103,6 @@ class MainActivity : AppCompatActivity() {
         binding?.tvStartAgain?.setOnClickListener {
             confirmDeleteAll(repository)
         }
-
-
-
     }
         //Ask user to confirm delete All
          private fun confirmDeleteAll( repository: MainRepository) {
@@ -177,7 +170,7 @@ class MainActivity : AppCompatActivity() {
             setupMyGoalsRecyclerView(selectedGoalsData)
             goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
                 override fun onCLick(goal: String) {
-                    selectedGoal = GoalType.values().find {it.label == goal}?.number
+                    selectedGoal = GoalTypeEnum.values().find {it.label == goal}?.number
 
                     val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
                     intent.putExtra("selectedGoal", selectedGoal)

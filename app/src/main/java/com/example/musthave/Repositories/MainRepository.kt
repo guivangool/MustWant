@@ -34,7 +34,7 @@ class MainRepository (val configDao:ConfigurationDao,
        return goalProgressDao.getAllTotalProgress()
     }
 
-    suspend fun getAllFromYesterday(yesterday: Date): Flow<Int>
+    suspend fun getAllFromYesterday(yesterday: Date): Int
     {
         return goalProgressDao.getAllFromYesterday(yesterday)
     }

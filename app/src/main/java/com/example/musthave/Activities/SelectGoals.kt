@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.musthave.DataEntities.GoalEntity
-import com.example.musthave.Enums.GoalType
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.SelectGoalsViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
@@ -59,19 +59,19 @@ class SelectGoals : AppCompatActivity() {
                 this.goals = goals as ArrayList<GoalEntity>
                 for (goal in goals) {
                     when (goal.goalId) {
-                        GoalType.ME.number -> {
+                        GoalTypeEnum.ME.number -> {
                             selectedGoal(binding?.GoalMe as TextView, goal.selected)
                             GoalMeisSelected = goal.selected
                         }
-                        GoalType.HOME.number -> {
+                        GoalTypeEnum.HOME.number -> {
                             selectedGoal(binding?.GoalHome as TextView, goal.selected)
                             GoalHomeisSelected = goal.selected
                         }
-                        GoalType.WORK.number -> {
+                        GoalTypeEnum.WORK.number -> {
                             selectedGoal(binding?.GoalWork as TextView, goal.selected)
                             GoalWorkisSelected = goal.selected
                         }
-                        GoalType.RELATIONS.number -> {
+                        GoalTypeEnum.RELATIONS.number -> {
                             selectedGoal(binding?.GoalRelations as TextView, goal.selected)
                             GoalRelationisSelected = goal.selected
                         }
@@ -98,10 +98,10 @@ class SelectGoals : AppCompatActivity() {
         }
 
         binding?.btnConfirm?.setOnClickListener {
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.ME.number,GoalMeisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.HOME.number,GoalHomeisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.RELATIONS.number,GoalRelationisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalType.WORK.number,GoalWorkisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.ME.number,GoalMeisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.HOME.number,GoalHomeisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.RELATIONS.number,GoalRelationisSelected,0))
+            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.WORK.number,GoalWorkisSelected,0))
             finish()
         }
 

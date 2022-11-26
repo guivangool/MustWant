@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musthave.DataEntities.GoalEntity
-import com.example.musthave.DomainEntities.MyGoal
-import com.example.musthave.Enums.GoalType
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.databinding.GoalBinding
 
 class MyGoalsAdapter(val items: ArrayList<GoalEntity>) :
@@ -26,7 +25,7 @@ class MyGoalsAdapter(val items: ArrayList<GoalEntity>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvGoal.text = GoalType.values().find { it.number == items[position].goalId }?.label
+        holder.tvGoal.text = GoalTypeEnum.values().find { it.number == items[position].goalId }?.label
         holder.tvPercentaje.text = items[position].goalPercentaje.toString() + "%"
 
         holder.tvGoal.setOnClickListener {

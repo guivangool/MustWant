@@ -24,25 +24,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.musthave.DataEntities.InspirationEntity
-import com.example.musthave.Enums.GoalType
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.InspirationViewModelFactory
-import com.example.musthave.Factories.ObstacleViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
 import com.example.musthave.Repositories.InspirationRepository
-import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.databinding.ActivityCreateInspirationBinding
 import com.example.musthave.viewModels.InspirationViewModel
-import com.example.musthave.viewModels.ObstacleViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -109,7 +102,7 @@ class CreateInspiration : AppCompatActivity() {
                 binding?.ivGoalImage?.setImageDrawable(null)
                 val radio: RadioButton = findViewById(checkedId)
                 loadInspiration(
-                    GoalType.values().find { it.label == radio.text }?.number
+                    GoalTypeEnum.values().find { it.label == radio.text }?.number
                 )
             })
 
@@ -130,7 +123,7 @@ class CreateInspiration : AppCompatActivity() {
                 if (isNew) {
                     val radioButtonSelected =
                         findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                    var goalID = GoalType.values().find { it.label == radioButtonSelected.text }?.number as Int
+                    var goalID = GoalTypeEnum.values().find { it.label == radioButtonSelected.text }?.number as Int
                     //Update ViewModel Data for INSERT
                     inspirationViewModel.goalId.value = goalID
                     inspirationViewModel.insert()
@@ -249,7 +242,7 @@ class CreateInspiration : AppCompatActivity() {
 
         for (goal in goalList) {
             val radioButton = RadioButton(this)
-            radioButton.text = GoalType.values().find { it.number == goal }?.label
+            radioButton.text = GoalTypeEnum.values().find { it.number == goal }?.label
 
             //Set properties
             radioButton.setBackgroundResource(R.drawable.radio_button_background)

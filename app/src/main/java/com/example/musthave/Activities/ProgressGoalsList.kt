@@ -4,20 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.musthave.DataEntities.GoalProgressEntity
-import com.example.musthave.Enums.GoalType
-import com.example.musthave.Factories.ProgressGoalViewModelFactory
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.ProgressGoalsListViewModelFactory
 import com.example.musthave.MustWantApp
 import com.example.musthave.ProgressGoalsListAdapter
 import com.example.musthave.Repositories.ProgressGoalRepository
 import com.example.musthave.databinding.ActivityProgressGoalsListBinding
-import com.example.musthave.viewModels.ProgressGoalViewModel
 import com.example.musthave.viewModels.ProgressGoalsListViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class ProgressGoalsList : AppCompatActivity() {
     private var binding: ActivityProgressGoalsListBinding? = null
@@ -74,7 +68,7 @@ class ProgressGoalsList : AppCompatActivity() {
 
     private fun loadProgressGoals(goalId: Int) {
         binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString() +
-                GoalType.values().find { it.number == goalId }?.label
+                GoalTypeEnum.values().find { it.number == goalId }?.label
 
         //Load obstacles from database
         progressGoalsListViewModel.setProgressesByGoalId(goalId)

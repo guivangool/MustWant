@@ -1,16 +1,15 @@
 package com.example.musthave.viewModels
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.example.musthave.DataEntities.GoalEntity
-import com.example.musthave.MustWantApp
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import com.example.musthave.DomainEntities.Configuration
 import com.example.musthave.DomainEntities.MainMessage
-import com.example.musthave.DomainEntities.MyGoal
-import com.example.musthave.Enums.GoalType
+import com.example.musthave.Enums.GoalTypeEnum
+import com.example.musthave.Enums.MainMessageEnum
 import com.example.musthave.Repositories.MainRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -33,10 +32,10 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
             if (selectedGoals.size == 0) {
                 if (repository.getGoals().size == 0) {
                     //Insert all goals (selected = false)
-                    repository.insertGoal(GoalEntity(GoalType.ME.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalType.HOME.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalType.RELATIONS.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalType.WORK.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.ME.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.HOME.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.RELATIONS.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.WORK.number, false,0))
                 }
             }
             getPercentajes(selectedGoals as ArrayList<GoalEntity> )
@@ -51,7 +50,6 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
         }
     }
 
-
     fun getPercentajes(selectedGoals: ArrayList<GoalEntity> ) {
 
         var substract = 0
@@ -60,7 +58,7 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
         var percentajeWork = 0
         var percentajeRelations = 0
 
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO) {
             val percentajesData = repository.goalProgressDao.getAllTotalProgress()
 
             for (goalProgressTotal in percentajesData) {
@@ -102,48 +100,47 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
 
     fun setMainMessage (selectedGoals: ArrayList<GoalEntity>)
     {
-
-        val message = MainMessage(0,"","")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
+            val message = MainMessage(0,"","")
             if (selectedGoals.size == 0) {
                 //The user did not select goals to achieve
-                message.messageNumber = 1
+                message.messageNumber = MainMessageEnum.NO_SELECTED_GOALS.number
+                message.message = MainMessageEnum.NO_SELECTED_GOALS.message
                 _mainMessage.postValue(message)
             }
             else {
-                repository.getAllFromYesterday(getYesterdayDate()).collect{ progress ->
+                val progress = withContext(Dispatchers.IO){ repository.getAllFromYesterday(getYesterdayDate())}
                     if (progress == 0)
                     {
                         //The user selected goals to achieve but the user did not progress them since the day before yesterday
-                        message.messageNumber = 2
+                        message.messageNumber = MainMessageEnum.NO_GOAL_PROGRESS.number
+                        message.message = MainMessageEnum.NO_GOAL_PROGRESS.message
                         _mainMessage.postValue(message)
                     }
                     else
                     {
-
-                        viewModelScope.launch {
-                            var it = repository.getAllGoalInspiration()
-                                if (it != null && it.size > 0) {
-                                    var random = 0
-                                    if (it.size > 1)
-                                    {
-                                        random = rand(0,it.size)
-                                    }
-                                    message.messageNumber = 4
-                                    _mainMessage.postValue(message)
-                                    message.image = it[random].image
-                                    message.message = it[random].phrase.toString()
-
-                                } else  {
-                                    message.messageNumber = 3
-                                    _mainMessage.postValue(message)
-                                }
+                        var it = withContext(Dispatchers.IO){repository.getAllGoalInspiration()}
+                        if (it != null && it.size > 0) {
+                            var random = 0
+                            if (it.size > 1)
+                            {
+                                random = rand(0,it.size)
+                            }
+                            message.messageNumber = MainMessageEnum.ALL_COMPLETED.number
+                            message.image = it[random].image
+                            message.message = it[random].phrase.toString()
+                            _mainMessage.postValue(message)
+                        }
+                        else
+                        {
+                            message.messageNumber = MainMessageEnum.NO_INSPIRATIONS.number
+                            message.message = MainMessageEnum.NO_INSPIRATIONS.message
+                            _mainMessage.postValue(message)
                         }
                     }
                 }
             }
         }
-    }
 
     private fun getYesterdayDate(): Date {
         var calendar = Calendar.getInstance()

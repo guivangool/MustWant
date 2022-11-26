@@ -3,22 +3,15 @@ package com.example.musthave.Activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.DataEntities.GoalProgressEntity
-import com.example.musthave.Enums.GoalType
-import com.example.musthave.Factories.InspirationViewModelFactory
+import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.ProgressGoalViewModelFactory
 import com.example.musthave.GoalProgressAdapter
 import com.example.musthave.MustWantApp
-import com.example.musthave.Repositories.InspirationRepository
-import com.example.musthave.Repositories.ObstacleRepository
 import com.example.musthave.Repositories.ProgressGoalRepository
 import com.example.musthave.databinding.ActivityProgressGoalsBinding
-import com.example.musthave.viewModels.InspirationViewModel
 import com.example.musthave.viewModels.ProgressGoalViewModel
-import kotlinx.coroutines.launch
-import java.sql.Array
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -88,16 +81,16 @@ class ProgressGoals : AppCompatActivity() {
         goalProgressAdapter.setOnClickListener(object : GoalProgressAdapter.OnClickListener {
             override fun onCLick(goal: String, stateGoal: Int) {
                 when (goal) {
-                    GoalType.ME.label -> {
+                    GoalTypeEnum.ME.label -> {
                         stateGoalMe = stateGoal
                     }
-                    GoalType.WORK.label -> {
+                    GoalTypeEnum.WORK.label -> {
                         stateGoalWork = stateGoal
                     }
-                    GoalType.HOME.label -> {
+                    GoalTypeEnum.HOME.label -> {
                         stateGoalHome = stateGoal
                     }
-                    GoalType.RELATIONS.label -> {
+                    GoalTypeEnum.RELATIONS.label -> {
                         stateGoalRelations = stateGoal
                     }
                 }
@@ -134,10 +127,10 @@ class ProgressGoals : AppCompatActivity() {
     private fun getCurrentState(goalId: Int): Int {
         var result = 0
         when (goalId) {
-            GoalType.ME.number -> result = stateGoalMe
-            GoalType.HOME.number -> result = stateGoalHome
-            GoalType.WORK.number -> result = stateGoalWork
-            GoalType.RELATIONS.number -> result = stateGoalRelations
+            GoalTypeEnum.ME.number -> result = stateGoalMe
+            GoalTypeEnum.HOME.number -> result = stateGoalHome
+            GoalTypeEnum.WORK.number -> result = stateGoalWork
+            GoalTypeEnum.RELATIONS.number -> result = stateGoalRelations
         }
         if (result == 2) result = -1
         return result
