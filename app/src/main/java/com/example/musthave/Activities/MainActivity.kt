@@ -1,6 +1,6 @@
 package com.example.musthave.Activities
 
-import android.app.Dialog
+import  android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val factory = MainViewModelFactory(repository)
         //ViewModel
         mainViewModel =
-            ViewModelProvider(this,factory).get(MainViewModel::class.java)
+                ViewModelProvider(this,factory).get(MainViewModel::class.java)
 
         //Observe View Model to show Selected Goals
         observeSelectedGoals()

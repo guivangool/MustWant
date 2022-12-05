@@ -28,9 +28,10 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
 
     fun getSelectedGoals() {
         viewModelScope.launch {
+
             var selectedGoals = repository.getSelectedGoals()
             if (selectedGoals.size == 0) {
-                if (repository.getGoals().size == 0) {
+                if (repository.getGoals().isEmpty()) {
                     //Insert all goals (selected = false)
                     repository.insertGoal(GoalEntity(GoalTypeEnum.ME.number, false,0))
                     repository.insertGoal(GoalEntity(GoalTypeEnum.HOME.number, false,0))
