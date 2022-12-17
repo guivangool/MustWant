@@ -54,7 +54,9 @@ class MainActivity : AppCompatActivity() {
                 ViewModelProvider(this,factory).get(MainViewModel::class.java)
 
         //Observe View Model to show Selected Goals
-        observeSelectedGoals()
+        mainViewModel.goalsSelection.observe(this, androidx.lifecycle.Observer { selectedGoalsData ->
+            setSelectedGoals(selectedGoalsData)
+        })
 
         //Observe View Model to show messages
         mainViewModel.mainMessage.observe(this, androidx.lifecycle.Observer { mainMessage ->
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //Register Progress button pressed
+        //User press "Register Progress" button
         binding?.tvProgress?.setOnClickListener {
             if (verifyGoalsSelected()) {
                 hasToUpdate = true
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //Create inspiration button pressed
+        //User press "Create inspiration" button
         binding?.tvAssignMotivation?.setOnClickListener {
             if (verifyGoalsSelected()) {
                 val intent = Intent(this@MainActivity, CreateInspiration::class.java)
@@ -87,19 +89,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //Remove Obstacle button pressed
+        //User press "Remove Obstacle" button
         binding?.tvEmotion?.setOnClickListener {
             val intent = Intent(this@MainActivity, RemoveObstacle::class.java)
             startActivity(intent)
         }
 
-        //Manage Obstacles button pressed
+        //User press "Manage Obstacles" button
         binding?.tvManageObstacles?.setOnClickListener {
             val intent = Intent(this@MainActivity, ObstacleList::class.java)
             startActivity(intent)
         }
 
-        //Start Again button pressed
+        //User press "Start Again" button
         binding?.tvStartAgain?.setOnClickListener {
             confirmDeleteAll(repository)
         }
@@ -149,12 +151,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //fun that obtains selected goals from the database
-    private fun observeSelectedGoals() {
-        //Observe ViewModel
-        mainViewModel.goalsSelection.observe(this, androidx.lifecycle.Observer { selectedGoalsData ->
+    //Update UI with selected goals
+    private fun setSelectedGoals(selectedGoalsData: List<GoalEntity>) {
+
             goalsSelection = selectedGoalsData as ArrayList<GoalEntity>
-            if (goalsSelection.size == 0)
+            if (goalsSelection.isEmpty())
             {
                 //Hide Goals List - Show Message
                 binding?.rvMyGoals?.visibility = View.GONE
@@ -168,22 +169,28 @@ class MainActivity : AppCompatActivity() {
             }
 
             setupMyGoalsRecyclerView(selectedGoalsData)
-            goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
-                override fun onCLick(goal: String) {
-                    selectedGoal = GoalTypeEnum.values().find {it.label == goal}?.number
 
-                    val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
-                    intent.putExtra("selectedGoal", selectedGoal)
-                    startActivity(intent)
-                }
-            })
-            //TODO  - Remove goalList
-            goalList.clear()
-            for (goalSelected in goalsSelection )
-            {
-                goalList.add(goalSelected.goalId)
+            goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
+            override fun onCLick(goal: String) {
+                selectedGoal = GoalTypeEnum.values().find {it.label == goal}?.number
+
+                val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
+                intent.putExtra("selectedGoal", selectedGoal)
+                startActivity(intent)
             }
         })
+            //Update list of IDs of selected goals
+            goalList = getGoalIDs(selectedGoalsData)
+    }
+
+    //Return ArrayList<Int> with all the IDs of selected goals
+    private fun getGoalIDs(goalsSelection:ArrayList<GoalEntity>):ArrayList<Int>{
+        val goalListInts = ArrayList<Int>()
+        for (goalSelected in goalsSelection )
+        {
+            goalListInts.add(goalSelected.goalId)
+        }
+        return goalListInts
     }
 
     //fun that set the data source to the list of goals (recycler VIew)
