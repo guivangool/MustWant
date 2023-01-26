@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "551302361634",
+    "project_id": "mustwant-cb962",
+    "storage_bucket": "mustwant-cb962.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551302361634:android:adb5cedd4ea2c9aa35907b",
+        "android_client_info": {
+          "package_name": "com.example.musthave"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551302361634-dh42u1fv2ijg9cfd94mj220q86bihlra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmzq0elJAisszojnyZhXVYr7wnYLXUAFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551302361634-dh42u1fv2ijg9cfd94mj220q86bihlra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551302361634:android:b6c70904b1c520fd35907b",
+        "android_client_info": {
+          "package_name": "com.vangool.mustwant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551302361634-dh42u1fv2ijg9cfd94mj220q86bihlra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmzq0elJAisszojnyZhXVYr7wnYLXUAFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551302361634-dh42u1fv2ijg9cfd94mj220q86bihlra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
