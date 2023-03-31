@@ -47,6 +47,7 @@
     <string name="ACTIVITY_LABEL_NO_BTN">No</string>
     <string name="RADIO_BTN_OPTION_PENDING">Pendiente</string>
     <string name="RADIO_BTN_OPTION_COMPLETE">Finalizada</string>
+    <string name="CREATE_OBSTACLE_SET_FIELDS_VALIDATION">Debe ingresar qué es lo que tiene que hacer</string>
 
 
 </resources>
