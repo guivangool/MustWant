@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         //User press "Create inspiration" button
         binding?.tvAssignMotivation?.setOnClickListener {
             if (verifyGoalsSelected()) {
+                hasToUpdate = true
                 val intent = Intent(this@MainActivity, CreateInspiration::class.java)
                 intent.putExtra("goalList", goalList)
                 startActivity(intent)
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             customDialog.setCanceledOnTouchOutside(false)
 
             dialogBinding.btnYes.setOnClickListener {
+                hasToUpdate = true
                 mainViewModel.deleteAll()
                 customDialog.dismiss()
             }
