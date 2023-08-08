@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             customDialog.setCanceledOnTouchOutside(false)
 
             dialogBinding.btnYes.setOnClickListener {
+                //Force main screen update after deleting all the information
                 hasToUpdate = true
                 mainViewModel.deleteAll()
                 customDialog.dismiss()
