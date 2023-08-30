@@ -4,18 +4,22 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DataEntities.GoalProgressEntity
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.ProgressGoalViewModelFactory
+import com.example.musthave.Fragments.AcceptCancel
 import com.example.musthave.GoalProgressAdapter
+import com.example.musthave.Interfaces.OnAcceptCancelButtonClickListener
 import com.example.musthave.MustWantApp
+import com.example.musthave.R
 import com.example.musthave.Repositories.ProgressGoalRepository
 import com.example.musthave.databinding.ActivityProgressGoalsBinding
 import com.example.musthave.viewModels.ProgressGoalViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProgressGoals : AppCompatActivity() {
+class ProgressGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
 
     private var binding: ActivityProgressGoalsBinding? = null
     private var goalList = ArrayList<String>()
@@ -61,21 +65,13 @@ class ProgressGoals : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding?.btnConfirm?.setOnClickListener {
-                val nowDate = getNowDate()
-                for (goal in goalProgressList) {
-                    progressGoalViewModel.goalId.value = goal.goalID
-                    progressGoalViewModel.progressDate.value = nowDate
-                    progressGoalViewModel.goalProgress.value = getCurrentState(goal.goalID)
-                    progressGoalViewModel.totalProgress.value = 0
-                    progressGoalViewModel.insert()
-                }
-                finish()
-            }
-
-        //Cancel button is pressed
-        binding?.btnCancel?.setOnClickListener {
-            finish()
+        //Add the fragment AcceptCancel programmatically
+        if (savedInstanceState == null) {
+            val fragment = AcceptCancel()
+            val fragmentTransaction  = supportFragmentManager.beginTransaction()
+            fragment.setOnAcceptCancelButtonClickListener(this)
+            fragmentTransaction.add(R.id.fragment_accept_cancel,fragment)
+            fragmentTransaction.commit()
         }
 
         goalProgressAdapter.setOnClickListener(object : GoalProgressAdapter.OnClickListener {
@@ -134,6 +130,21 @@ class ProgressGoals : AppCompatActivity() {
         }
         if (result == 2) result = -1
         return result
+    }
+    override fun onAcceptButtonCLicked() {
+        val nowDate = getNowDate()
+        for (goal in goalProgressList) {
+            progressGoalViewModel.goalId.value = goal.goalID
+            progressGoalViewModel.progressDate.value = nowDate
+            progressGoalViewModel.goalProgress.value = getCurrentState(goal.goalID)
+            progressGoalViewModel.totalProgress.value = 0
+            progressGoalViewModel.insert()
+        }
+        finish()
+    }
+
+    override fun onCancelButtonCLicked() {
+        finish()
     }
 }
 

@@ -32,37 +32,11 @@
         android:paddingTop="10dp"
         android:layout_gravity="center"
         />
-
-    <LinearLayout
-        android:id="@+id/llButtons"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_accept_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/green_button"
-            android:text="@string/ACTIVITY_LABEL_ACCEPT_BTN"
-            android:textColor="@color/white"
-            android:textSize="@dimen/btn_text_size"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/green_button"
-            android:text="@string/ACTIVITY_LABEL_CANCEL_BTN"
-            android:textColor="@color/white"
-            android:textSize="@dimen/btn_text_size" />
-    </LinearLayout>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
