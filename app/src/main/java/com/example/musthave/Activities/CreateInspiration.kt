@@ -24,9 +24,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DataEntities.InspirationEntity
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.InspirationViewModelFactory
+import com.example.musthave.Fragments.AcceptCancel
+import com.example.musthave.Interfaces.OnAcceptCancelButtonClickListener
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
 import com.example.musthave.Repositories.InspirationRepository
@@ -39,7 +42,7 @@ import java.io.OutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CreateInspiration : AppCompatActivity() {
+class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener {
 
     private var binding: ActivityCreateInspirationBinding? = null
     private var goalList = ArrayList<Int>()
@@ -60,6 +63,15 @@ class CreateInspiration : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         createRadioButtons()
+
+        //Add the fragment AcceptCancel programmatically
+        if (savedInstanceState == null) {
+            val fragment = AcceptCancel()
+            val fragmentTransaction  = supportFragmentManager.beginTransaction()
+            fragment.setOnAcceptCancelButtonClickListener(this)
+            fragmentTransaction.add(R.id.fragment_accept_cancel,fragment)
+            fragmentTransaction.commit()
+        }
 
         //Create ViewModel
         //Dao
@@ -105,43 +117,6 @@ class CreateInspiration : AppCompatActivity() {
                     GoalTypeEnum.values().find { it.label == radio.text }?.number
                 )
             })
-
-        binding?.btnCancel?.setOnClickListener {
-            finish()
-        }
-
-        binding?.btnAccept?.setOnClickListener {
-            if (binding?.etSetPhrase?.text?.toString() != "" &&
-                binding?.ivGoalImage?.drawable != null
-            ) {
-                val filePath = saveImageToInternalStorage(binding?.ivGoalImage?.drawable)
-
-                //Update ViewModel Data
-                inspirationViewModel.image.value = filePath.toString()
-                inspirationViewModel.phrase.value = binding?.etSetPhrase?.text.toString()
-
-                if (isNew) {
-                    val radioButtonSelected =
-                        findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                    var goalID = GoalTypeEnum.values().find { it.label == radioButtonSelected.text }?.number as Int
-                    //Update ViewModel Data for INSERT
-                    inspirationViewModel.goalId.value = goalID
-                    inspirationViewModel.insert()
-                } else {
-                    //Update ViewModel Data for UPDATE
-                    inspirationViewModel.id.value = currentInspiration!!.id
-                    inspirationViewModel.goalId.value = currentInspiration!!.goalId
-                    inspirationViewModel.update()
-                }
-                finish()
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.CREATE_INSPIRATION_SET_FIELDS_VALIDATION),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
     }
 
     private fun loadInspiration(goalId: Int?) {
@@ -294,6 +269,42 @@ class CreateInspiration : AppCompatActivity() {
 
         // Return the saved image uri
         return Uri.parse(file.absolutePath)
+    }
+
+    override fun onAcceptButtonCLicked() {
+        if (binding?.etSetPhrase?.text?.toString() != "" &&
+            binding?.ivGoalImage?.drawable != null
+        ) {
+            val filePath = saveImageToInternalStorage(binding?.ivGoalImage?.drawable)
+
+            //Update ViewModel Data
+            inspirationViewModel.image.value = filePath.toString()
+            inspirationViewModel.phrase.value = binding?.etSetPhrase?.text.toString()
+
+            if (isNew) {
+                val radioButtonSelected =
+                    findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
+                var goalID = GoalTypeEnum.values().find { it.label == radioButtonSelected.text }?.number as Int
+                //Update ViewModel Data for INSERT
+                inspirationViewModel.goalId.value = goalID
+                inspirationViewModel.insert()
+            } else {
+                //Update ViewModel Data for UPDATE
+                inspirationViewModel.id.value = currentInspiration!!.id
+                inspirationViewModel.goalId.value = currentInspiration!!.goalId
+                inspirationViewModel.update()
+            }
+            finish()
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.CREATE_INSPIRATION_SET_FIELDS_VALIDATION),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+    override fun onCancelButtonCLicked() {
+        finish()
     }
 }
 
