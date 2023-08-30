@@ -9,7 +9,7 @@ class ProgressGoalViewModelFactory (
     private val repository: ProgressGoalRepository
 )
     : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ProgressGoalViewModel::class.java)){
             return ProgressGoalViewModel(repository) as T
         }

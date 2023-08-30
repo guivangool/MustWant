@@ -10,7 +10,7 @@ import com.example.musthave.viewModels.ObstacleViewModel
 class InspirationViewModelFactory (
     private val repository: InspirationRepository)
     : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(InspirationViewModel::class.java)){
                 return InspirationViewModel(repository) as T
             }
