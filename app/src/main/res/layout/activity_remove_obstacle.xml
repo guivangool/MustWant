@@ -30,7 +30,6 @@
       android:background="@drawable/background_panel"
       android:orientation="vertical"
       android:layout_margin="10dp"
-      android:paddingBottom="10dp"
       app:layout_constraintTop_toBottomOf="@+id/tbRemoveObstacle"
       app:layout_constraintBottom_toBottomOf="parent"
       >
@@ -76,38 +75,12 @@
         android:day="@={obstacleViewModel.day}"
         />
 
-    <LinearLayout
-        android:id="@+id/llButtonsObstacle"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_accept_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom">
-
-      <Button
-          android:id="@+id/btnAccept"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginRight="10dp"
-          android:layout_marginLeft="15dp"
-          android:layout_weight="1"
-          android:text="@string/ACTIVITY_LABEL_ACCEPT_BTN"
-          android:textColor="@color/white"
-          android:textSize="@dimen/btn_text_size"
-          android:backgroundTint="@color/green_button"
-          />
-      <Button
-          android:id="@+id/btnCancel"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginRight="10dp"
-          android:layout_marginLeft="15dp"
-          android:layout_weight="1"
-          android:text="@string/ACTIVITY_LABEL_CANCEL_BTN"
-          android:textColor="@color/white"
-          android:textSize="@dimen/btn_text_size"
-          android:backgroundTint="@color/green_button"/>
-    </LinearLayout>
+        />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
