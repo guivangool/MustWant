@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.SelectGoalsViewModelFactory
+import com.example.musthave.Fragments.AcceptCancel
+import com.example.musthave.Interfaces.OnAcceptCancelButtonClickListener
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
 import com.example.musthave.Repositories.SelectGoalsRepository
@@ -15,7 +17,7 @@ import com.example.musthave.databinding.ActivitySelectGoalsBinding
 import com.example.musthave.viewModels.SelectGoalsViewModel
 
 
-class SelectGoals : AppCompatActivity() {
+class SelectGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
 
     private var binding: ActivitySelectGoalsBinding? = null
     private var GoalMeisSelected = false
@@ -40,6 +42,15 @@ class SelectGoals : AppCompatActivity() {
         }
         binding?.tbSelectGoals?.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        //Add the fragment AcceptCancel programmatically
+        if (savedInstanceState == null) {
+            val fragment = AcceptCancel()
+            val fragmentTransaction  = supportFragmentManager.beginTransaction()
+            fragment.setOnAcceptCancelButtonClickListener(this)
+            fragmentTransaction.add(R.id.fragment_accept_cancel,fragment)
+            fragmentTransaction.commit()
         }
 
         //Create ViewModel
@@ -97,17 +108,6 @@ class SelectGoals : AppCompatActivity() {
             selectedGoal(binding?.GoalWork as TextView, GoalWorkisSelected)
         }
 
-        binding?.btnConfirm?.setOnClickListener {
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.ME.number,GoalMeisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.HOME.number,GoalHomeisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.RELATIONS.number,GoalRelationisSelected,0))
-            selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.WORK.number,GoalWorkisSelected,0))
-            finish()
-        }
-
-        binding?.btnCancel?.setOnClickListener {
-            finish()
-        }
     }
 
     private fun selectedGoal(tv: TextView, selected: Boolean) {
@@ -124,4 +124,17 @@ class SelectGoals : AppCompatActivity() {
         super.onDestroy()
         binding = null
     }
+
+    override fun onAcceptButtonCLicked() {
+        selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.ME.number,GoalMeisSelected,0))
+        selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.HOME.number,GoalHomeisSelected,0))
+        selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.RELATIONS.number,GoalRelationisSelected,0))
+        selectGoalsViewModel.updateGoal(GoalEntity(GoalTypeEnum.WORK.number,GoalWorkisSelected,0))
+        finish()
+    }
+
+    override fun onCancelButtonCLicked() {
+        finish()
+    }
+
 }

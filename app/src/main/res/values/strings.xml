@@ -48,6 +48,8 @@
     <string name="RADIO_BTN_OPTION_PENDING">Pendiente</string>
     <string name="RADIO_BTN_OPTION_COMPLETE">Finalizada</string>
     <string name="CREATE_OBSTACLE_SET_FIELDS_VALIDATION">Debe ingresar qué es lo que tiene que hacer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

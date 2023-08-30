@@ -9,7 +9,7 @@ class ObstacleListViewModelFactory (
     private val repository: ObstacleRepository
 )
     : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ObstacleListViewModel::class.java)){
             return ObstacleListViewModel(repository) as T
         }
