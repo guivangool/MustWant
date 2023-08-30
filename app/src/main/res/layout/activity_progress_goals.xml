@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_panel"
     android:layout_margin="10dp"
-    android:paddingBottom="10dp">
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMyGoalsProgress"
@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="5dp"
-        android:paddingTop="10dp"
         android:layout_gravity="center"
         />
     <androidx.fragment.app.FragmentContainerView
