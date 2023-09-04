@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity"
@@ -134,48 +136,22 @@
     </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
-        app:layout_constraintTop_toBottomOf="@+id/llActions"
-        app:layout_constraintBottom_toTopOf="@+id/llConfig"
-        android:id="@+id/flToDo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/background_panel_green"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="10dp"
-        >
-        <ImageView
-            android:id="@+id/ivToDo"
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_action_needed"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/fondo_accion"
-            android:layout_marginTop="8dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/llActions"
+            app:layout_constraintBottom_toTopOf="@id/llConfig"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
-            android:scaleType="fitStart"></ImageView>
-"
-        <TextView
-            android:id="@+id/tvToDO"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_goals_message"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="24dp"
-            android:textColor="@color/bg_mygoals_color"
-            android:layout_gravity="center"
-        />
-    </FrameLayout>
+    />
     <LinearLayout
         android:id="@+id/llConfig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/flToDo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/clMain"
         android:background="@drawable/background_panel"
         android:orientation="vertical"
         android:gravity="center"

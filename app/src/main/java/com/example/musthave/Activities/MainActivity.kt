@@ -9,6 +9,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.*
@@ -17,6 +20,8 @@ import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.MainViewModelFactory
+import com.example.musthave.Fragments.AcceptCancel
+import com.example.musthave.Fragments.ActionNeeded
 import com.example.musthave.GeneralFunctions.animateLogo
 import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
@@ -137,30 +142,18 @@ class MainActivity : AppCompatActivity() {
         }
 
     private  fun showMessage(mainMessage: MainMessage) {
-        when (mainMessage.messageNumber) {
-            1 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_goals_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
-            }
-            2 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_goals_progress_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
-            }
-            3 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_recomendada))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_create_inspiration_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
-            }
-            4 -> {
-                var bitmap: Bitmap = BitmapFactory.decodeFile(mainMessage.image)
-                binding?.ivToDo?.setImageBitmap(bitmap)
-                binding?.tvToDO?.text = mainMessage.message
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding?.tvToDO?.setTextColor(resources.getColor(R.color.white))
-            }
-        }
+        val bundle = Bundle()
+        val fragment = ActionNeeded()
+        bundle.putInt("messageNumber",mainMessage.messageNumber)
+        bundle.putString("message",mainMessage.message)
+        bundle.putString("messageImage",mainMessage.image)
+        fragment.arguments = bundle
+        //fragmentTransaction!!.add(R.id.fragment_action_needed,fragment!!).commit()
+        var fragmentTransaction  = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)
+        fragmentTransaction.replace(R.id.fragment_action_needed,fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     //Update UI with selected goals
