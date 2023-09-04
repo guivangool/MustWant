@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.musthave.GeneralFunctions.animateLogo
 import com.example.musthave.Interfaces.OnAcceptCancelButtonClickListener
 import com.example.musthave.R
 import com.example.musthave.databinding.FragmentAcceptCancelBinding
@@ -21,6 +22,10 @@ class AcceptCancel : Fragment(R.layout.fragment_accept_cancel) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Animate Buttons
+        animateLogo(binding?.btnAcceptFragment,300)
+        animateLogo(binding?.btnCancelFragment,300)
 
         binding?.btnAcceptFragment?.setOnClickListener {
             onAcceptCancelButtonClickListener?.onAcceptButtonCLicked()

@@ -27,5 +27,7 @@
     <color name="red_progress">#90FF5722</color>
     <color name="gray">#D5CBCA</color>
     <color name="green_background_initial">#FFB0EBBD</color>
-    <color name="bg_action_cards">#38a3a5</color>
+    <color name="blue_background_initial">#0CC0DF</color>
+    <color name="bg_action_cards">#5C5E5E</color>
+    <color name="bg_option_main_color_aux">#5C5E5E</color>
 </resources>

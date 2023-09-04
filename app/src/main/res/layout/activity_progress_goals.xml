@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.ProgressGoals"
     android:orientation="vertical"
-    android:background="@color/green_background_initial">
+    android:background="@color/blue_background_initial">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbProgressGoals"
@@ -15,27 +15,26 @@
         android:background="@color/white"
         app:title="@string/ACTIVITY_TITLE_PROGRESS_GOALS"
         />
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/clProgressGoals"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_panel"
-    android:layout_margin="10dp"
-    >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMyGoalsProgress"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clProgressGoals"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
-        />
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_accept_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/background_panel">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMyGoalsProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_accept_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

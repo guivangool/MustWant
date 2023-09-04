@@ -14,7 +14,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Activities.RemoveObstacle"
-    android:background="@color/green_background_initial">
+    android:background="@color/blue_background_initial">
   <androidx.appcompat.widget.Toolbar
       android:id="@+id/tbRemoveObstacle"
       android:layout_width="match_parent"

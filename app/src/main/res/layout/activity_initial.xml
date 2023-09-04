@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Activities.Initial"
     android:background="@color/green_logo"
-    android:backgroundTint="@color/green_background_initial">
+    android:backgroundTint="@color/blue_background_initial"
+    android:orientation="vertical"
+    android:gravity="center">
+
 
     <ImageView
+        android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logo"
-        android:layout_gravity="center"
+        android:elevation="30dp"
+        android:translationZ="5dp"
+        android:background="@drawable/background_logo_initial"
         />
 </LinearLayout>

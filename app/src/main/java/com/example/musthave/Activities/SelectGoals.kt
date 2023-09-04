@@ -9,6 +9,7 @@ import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.SelectGoalsViewModelFactory
 import com.example.musthave.Fragments.AcceptCancel
+import com.example.musthave.GeneralFunctions.animateLogo
 import com.example.musthave.Interfaces.OnAcceptCancelButtonClickListener
 import com.example.musthave.MustWantApp
 import com.example.musthave.R
@@ -33,6 +34,12 @@ class SelectGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
         //Binding
         binding = ActivitySelectGoalsBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Animate options
+        animateLogo(binding?.GoalMe,400)
+        animateLogo(binding?.GoalHome,400)
+        animateLogo(binding?.GoalWork,400)
+        animateLogo(binding?.GoalRelations,400)
 
         //Action Bar
         setSupportActionBar(binding?.tbSelectGoals)

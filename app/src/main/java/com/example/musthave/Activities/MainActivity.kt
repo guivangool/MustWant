@@ -17,6 +17,7 @@ import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.MainViewModelFactory
+import com.example.musthave.GeneralFunctions.animateLogo
 import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
@@ -39,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         //Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Animate options
+        animateLogo(binding?.tvProgress,400)
+        animateLogo(binding?.tvEmotion,400)
+        animateLogo(binding?.tvManageObstacles,400)
+        animateLogo(binding?.tvSetGoalOption,400)
+        animateLogo(binding?.tvAssignMotivation,400)
+        animateLogo(binding?.tvStartAgain,400)
 
         //Create ViewModel
         //Daos
