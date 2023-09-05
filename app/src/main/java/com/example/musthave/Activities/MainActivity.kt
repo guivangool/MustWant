@@ -1,17 +1,15 @@
 package com.example.musthave.Activities
 
+import android.annotation.SuppressLint
 import  android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.*
@@ -20,9 +18,8 @@ import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.MainViewModelFactory
-import com.example.musthave.Fragments.AcceptCancel
 import com.example.musthave.Fragments.ActionNeeded
-import com.example.musthave.GeneralFunctions.animateLogo
+import com.example.musthave.GeneralFunctions.*
 import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
@@ -141,19 +138,47 @@ class MainActivity : AppCompatActivity() {
             customDialog.show()
         }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private  fun showMessage(mainMessage: MainMessage) {
         val bundle = Bundle()
         val fragment = ActionNeeded()
+
         bundle.putInt("messageNumber",mainMessage.messageNumber)
         bundle.putString("message",mainMessage.message)
         bundle.putString("messageImage",mainMessage.image)
         fragment.arguments = bundle
-        //fragmentTransaction!!.add(R.id.fragment_action_needed,fragment!!).commit()
         var fragmentTransaction  = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)
         fragmentTransaction.replace(R.id.fragment_action_needed,fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+
+        //animate recommended action button
+        binding ?.tvSetGoalOption!!.background = getDrawable (R.drawable.bg_option_main)
+        binding ?.tvProgress!!.background = getDrawable (R.drawable.bg_option_main)
+        binding ?.tvAssignMotivation!!.background = getDrawable (R.drawable.bg_option_main)
+        binding?.tvSetGoalOption!!.setTextColor(getResources().getColor(R.color.white))
+        binding?.tvProgress!!.setTextColor(getResources().getColor(R.color.white))
+        binding?.tvAssignMotivation!!.setTextColor(getResources().getColor(R.color.white))
+
+        when (mainMessage.messageNumber) {
+            1 -> {
+                vibrateView(binding?.tvSetGoalOption)
+                binding?.tvSetGoalOption!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvSetGoalOption!!.setTextColor(getResources().getColor(R.color.black))
+        }
+            2 ->{
+                vibrateView(binding?.tvProgress)
+                binding?.tvProgress!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvProgress!!.setTextColor(getResources().getColor(R.color.black))
+            }
+            3 ->{
+                vibrateView(binding?.tvAssignMotivation)
+                binding?.tvAssignMotivation!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvAssignMotivation!!.setTextColor(getResources().getColor(R.color.black))
+            }
+        }
+
     }
 
     //Update UI with selected goals

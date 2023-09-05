@@ -4,7 +4,7 @@
     android:id="@+id/flToDo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_panel_green"
+    android:background="@drawable/background_panel_gray"
     >
 
     <ImageView
@@ -27,5 +27,7 @@
         android:textStyle="bold"
         android:textColor="@color/bg_mygoals_color"
         android:layout_gravity="center"
+        android:textSize="@dimen/MainMessageSize"
+        android:paddingBottom="35dp"
         />
 </FrameLayout>

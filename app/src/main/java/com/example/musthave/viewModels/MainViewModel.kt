@@ -33,10 +33,10 @@ class MainViewModel ( val repository:MainRepository) : ViewModel() {
             if (selectedGoals.isEmpty()) {
                 if (repository.getGoals().isEmpty()) {
                     //Insert all goals (selected = false)
-                    repository.insertGoal(GoalEntity(GoalTypeEnum.ME.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalTypeEnum.HOME.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalTypeEnum.RELATIONS.number, false,0))
-                    repository.insertGoal(GoalEntity(GoalTypeEnum.WORK.number, false,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.ME.number, false,0,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.HOME.number, false,0,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.RELATIONS.number, false,0,0))
+                    repository.insertGoal(GoalEntity(GoalTypeEnum.WORK.number, false,0,0))
                 }
             }
             getPercentajes(selectedGoals as ArrayList<GoalEntity> )

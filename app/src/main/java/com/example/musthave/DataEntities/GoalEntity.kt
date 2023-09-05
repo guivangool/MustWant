@@ -8,5 +8,6 @@ data class GoalEntity(
     @PrimaryKey
     val goalId : Int,
     val selected : Boolean,
-    var goalPercentaje: Int
+    var goalPercentaje: Int,
+    var goalDays: Int
 )
