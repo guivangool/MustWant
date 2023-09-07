@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -37,26 +38,27 @@ class ActionNeeded : Fragment(R.layout.fragment_action_needed) {
 
         when (messageNumber) {
             1 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
+                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.bg_action_without_title))
                 binding?.tvToDO?.text = getResources().getString(R.string.action_goals_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
+                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_XY
             }
             2 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
+                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.bg_action_without_title))
                 binding?.tvToDO?.text = getResources().getString(R.string.action_goals_progress_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
+                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_XY
             }
             3 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_recomendada))
+                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.bg_action_without_title))
                 binding?.tvToDO?.text = getResources().getString(R.string.action_create_inspiration_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
+                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_XY
             }
             4 -> {
                 var bitmap: Bitmap = BitmapFactory.decodeFile(messageImage)
                 binding?.ivToDo?.setImageBitmap(bitmap)
                 binding?.tvToDO?.text = message
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
+                binding?.ivToDo?.scaleType = ImageView.ScaleType.CENTER_CROP
                 binding?.tvToDO?.setTextColor(resources.getColor(R.color.white))
+                binding?.tvToDO?.setBackgroundColor(resources.getColor(R.color.black))
             }
         }
         return binding?.root

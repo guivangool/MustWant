@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">MustHave</string>
+    <string name="GoalMe">Yo</string>
+    <string name="GoalHome">Hogar</string>
+    <string name="GoalWork">Trabajo</string>
+    <string name="GoalRelations">Relaciones</string>
+    <string name="messageNoGoalSelected">Primero debe seleccionar las áreas a mejorar.</string>
+    <string name="main_phrase">We must do what we have to do in order to do what we want to do</string>
+    <string name="action_goals_message">Convertí tus objetivos en realidad. Elegí las áreas de mejora y no pares hasta alcanzar tus metas. </string>
+    <string name="action_goals_progress_message">Todos los días hay que registrar el avance de los objetivos.</string>
+    <string name="action_create_inspiration_message">Si no lográs avanzar para alcanzar tus metas, creá inspiraciones para motivarte a seguir.</string>
+    <string name="question_delete_all">¿Está seguro?</string>
+    <string name="explanation_delete_all">Se eliminarán todos los datos ingresados para iniciar el proceso desde cero.</string>
+    <string name="title_my_goals">MIS ÁREAS DE MEJORA</string>
+    <string name="message_no_goals_selected">No seleccionaste ningún área a mejorar.</string>
+    <string name="title_actions">ACCIONES</string>
+    <string name="option_name_register_advance">Registrar avance</string>
+    <string name="option_name_remove_obstacle">Eliminar obstáculo</string>
+    <string name="option_name_admin_obstacles">Administrar obstáculos</string>
+    <string name="title_configuration">CONFIGURACIÓN</string>
+    <string name="option_name_select_goals"> Áreas a mejorar </string>
+    <string name="option_name_create_inspiration">Motivarme</string>
+    <string name="option_name_start_again">Empezar de cero</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Contraseña</string>
+    <string name="btn_label_register">REGISTRARSE</string>
+    <string name="btn_label_login">INGRESAR</string>
+    <string name="CREATE_INSPIRATION_SET_FIELDS_VALIDATION">Ingrese una frase y una imagen.</string>
+    <string name="PERMISSIONS_GRANTED_EXTERNAL_STORAGE_MESSAGE">Permisos otorgados para escribir en almacenamiento externo.</string>
+    <string name="PERMISSIONS_DENIED_EXTERNAL_STORAGE_MESSAGE">Permisos denegados para escribir en almacenamiento externo.</string>
+    <string name="APPLICATION_NAME">Must|Want App</string>
+    <string name="NEEDS_ACCESS_EXTERNAL_STORAGE_MESSAGE">necesita acceder a su almacenamiento externo</string>
+    <string name="IMAGES_DIRECTORY_NAME">images</string>
+    <string name="ACTIVITY_LABEL_SELECT_GOAL">Elegí el área donde necesitás motivarte</string>
+    <string name="ACTIVITY_LABEL_INSERT_PHRASE">Ingresá una frase motivadora</string>
+    <string name="ACTIVITY_LABEL_SELECT_PICTURE">Elegí una foto que te motive a alcanzar tus objetivos.</string>
+    <string name="ACTIVITY_LABEL_ACCEPT_BTN">Confirmar</string>
+    <string name="ACTIVITY_LABEL_CANCEL_BTN">Volver</string>
+    <string name="ACTIVITY_TITLE_OBSTACLES_LIST">LISTA DE OBSTÁCULOS</string>
+    <string name="ACTIVITY_TITLE_PROGRESS_GOALS_LIST">REGISTROS AVANCE:</string>
+    <string name="ACTIVITY_HINT_OBSTACLE_NAME">¿Qué tenes que hacer y cuándo?</string>
+    <string name="ACTIVITY_TITLE_SELEC_GOALS">¿QUÉ QUERÉS MEJORAR?</string>
+    <string name="ACTIVITY_LABEL_YES_BTN">Si</string>
+    <string name="ACTIVITY_LABEL_NO_BTN">No</string>
+    <string name="RADIO_BTN_OPTION_PENDING">Pendiente</string>
+    <string name="RADIO_BTN_OPTION_COMPLETE">Finalizada</string>
+    <string name="CREATE_OBSTACLE_SET_FIELDS_VALIDATION">Debe ingresar qué es lo que tiene que hacer</string>
+    <string name="amount_of_days">Cantidad de días:</string>
+    <string name="default_amount_days">90</string>
+    <string name="select_goals_explanation">Elegí las áreas en las que querés mejorar e ingresá la cantidad de días que pensas que te va a llevar alcanzar tus metas.</string>
+    <string name="progress_goals_explanation">Si progresaste marcalo <font color='#008000'>VERDE</font>.\n\nSi retrocediste es <font color='#FF0000'>ROJO</font>.\n\nSi no hiciste nada, <font color='#dccd30'>AMARILLO</font>.\n</string>
+    <string name="progress_goals_explanationSecondLine">Podés registrar avances o retrocesos todas las veces que quieras. Para avanzar, lo importante es tener más avances que retocesos durante las 24 horas del día.</string>
+    <string name="explanation_remove_obstacle">Eliminá de tu mente las tareas pendientes que no están relacionadas a alcanzar tus objetivos. Anotalas y asignales una fecha para hacerlas luego.</string>
+    <string name="label_pending_days">FALTAN</string>
+    <string name="label_days">DÍAS</string>
+
+</resources>

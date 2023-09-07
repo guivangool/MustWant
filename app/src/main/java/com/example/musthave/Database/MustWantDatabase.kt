@@ -18,7 +18,7 @@ import com.example.musthave.TypeConverters.DateConverter
         InspirationEntity::class,
         ObstacleEntity::class,
         GoalEntity::class],
-        version = 32
+        version = 33
 )
 @TypeConverters(DateConverter::class)
 

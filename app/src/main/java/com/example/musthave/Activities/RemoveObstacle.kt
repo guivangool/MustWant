@@ -32,14 +32,6 @@ class RemoveObstacle : AppCompatActivity(),OnAcceptCancelButtonClickListener{
         binding?.obstacleViewModel = obstacleViewModel
         binding?.lifecycleOwner = this
 
-        //Set back button in the Action Bar
-        setSupportActionBar(binding?.tbRemoveObstacle)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        binding?.tbRemoveObstacle?.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
         //Set minium to the DatePicker
         binding?.dpObstacle?.setMinDate(System.currentTimeMillis())
 

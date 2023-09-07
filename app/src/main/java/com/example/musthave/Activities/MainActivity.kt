@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity() {
 
             goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
             override fun onCLick(goal: String) {
-                selectedGoal = GoalTypeEnum.values().find {it.label == goal}?.number
+                selectedGoal = GoalTypeEnum.values().find {it.getText(this@MainActivity) == goal}?.number
 
                 val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
                 intent.putExtra("selectedGoal", selectedGoal)
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupMyGoalsRecyclerView(selectedGoals: ArrayList<GoalEntity>) {
             binding?.rvMyGoals?.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            goalAdapter = MyGoalsAdapter(selectedGoals)
+            goalAdapter = MyGoalsAdapter(this,selectedGoals)
             binding?.rvMyGoals?.adapter = goalAdapter
     }
 

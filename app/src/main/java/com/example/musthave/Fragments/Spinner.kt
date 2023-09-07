@@ -74,11 +74,17 @@ class Spinner : Fragment(R.layout.fragment_spinner) {
                         binding?.etDays?.setText(maxValue.toString())
                         binding?.etDays?.setSelection(binding?.etDays?.text!!.length)
                     }
-                    if (number < minValue!! )
+                    else if (number > 0 && number < minValue!! )
                     {
                         binding?.etDays?.setText(minValue.toString())
                         binding?.etDays?.setSelection(binding?.etDays?.text!!.length)
                     }
+                    else if (number == 0 )
+                    {
+                        binding?.etDays?.setText(getString(R.string.default_amount_days))
+                        binding?.etDays?.setSelection(binding?.etDays?.text!!.length)
+                    }
+                    else {}
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

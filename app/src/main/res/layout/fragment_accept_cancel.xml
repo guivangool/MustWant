@@ -14,16 +14,16 @@
             android:backgroundTint="@color/bg_option_main_color_aux"
             android:text="@string/ACTIVITY_LABEL_ACCEPT_BTN"
             android:textColor="@color/white"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
         <Button
             android:id="@+id/btnCancelFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
             android:layout_weight="1"
-            android:backgroundTint="@color/bg_option_main_color_aux"
+            android:backgroundTint="@color/bg_option_main_color_ligth_gray"
+            android:textColor="@color/black"
             android:text="@string/ACTIVITY_LABEL_CANCEL_BTN"
-            android:textColor="@color/white"
              />
 </LinearLayout>
 
