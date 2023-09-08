@@ -5,10 +5,9 @@ import  android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,12 +64,12 @@ class MainActivity : AppCompatActivity() {
                 ViewModelProvider(this,factory).get(MainViewModel::class.java)
 
         //Observe View Model to show Selected Goals
-        mainViewModel.goalsSelection.observe(this, androidx.lifecycle.Observer { selectedGoalsData ->
+        mainViewModel.goalsSelection.observe(this, Observer { selectedGoalsData ->
             setSelectedGoals(selectedGoalsData)
         })
 
         //Observe View Model to show messages
-        mainViewModel.mainMessage.observe(this, androidx.lifecycle.Observer { mainMessage ->
+        mainViewModel.mainMessage.observe(this, Observer { mainMessage ->
             showMessage(mainMessage)
         })
 

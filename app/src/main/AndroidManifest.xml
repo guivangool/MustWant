@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.musthave">
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
@@ -18,22 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MustHave">
-        <activity
-            android:name=".Activities.LoginActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MustHave.NoActionBar" />
+
         <activity
             android:name=".Activities.Initial"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MustHave.NoActionBar">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
@@ -52,6 +45,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+
         <activity
             android:name=".Activities.CreateInspiration"
             android:exported="true"

@@ -39,7 +39,6 @@
     <string name="ACTIVITY_TITLE_OBSTACLES_LIST">LISTA DE OBSTÁCULOS</string>
     <string name="ACTIVITY_TITLE_PROGRESS_GOALS_LIST">REGISTROS AVANCE:</string>
     <string name="ACTIVITY_HINT_OBSTACLE_NAME">¿Qué tenes que hacer y cuándo?</string>
-    <string name="ACTIVITY_TITLE_SELEC_GOALS">¿QUÉ QUERÉS MEJORAR?</string>
     <string name="ACTIVITY_LABEL_YES_BTN">Si</string>
     <string name="ACTIVITY_LABEL_NO_BTN">No</string>
     <string name="RADIO_BTN_OPTION_PENDING">Pendiente</string>

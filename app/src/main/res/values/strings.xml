@@ -39,17 +39,16 @@
     <string name="ACTIVITY_TITLE_OBSTACLES_LIST">OBSTACLES LIST</string>
     <string name="ACTIVITY_TITLE_PROGRESS_GOALS_LIST">PROGRESS RECORDS:</string>
     <string name="ACTIVITY_HINT_OBSTACLE_NAME">What do you have to do and when?</string>
-    <string name="ACTIVITY_TITLE_SELEC_GOALS">WHAT DO YOU WANT TO IMPROVE?</string>
     <string name="ACTIVITY_LABEL_YES_BTN">Yes</string>
     <string name="ACTIVITY_LABEL_NO_BTN">No</string>
     <string name="RADIO_BTN_OPTION_PENDING">Pending</string>
     <string name="RADIO_BTN_OPTION_COMPLETE">Done</string>
     <string name="CREATE_OBSTACLE_SET_FIELDS_VALIDATION">You must enter what you have to do</string>
-    <string name="amount_of_days">Humber of days:</string>
+    <string name="amount_of_days">Number of days:</string>
     <string name="default_amount_days">90</string>
     <string name="select_goals_explanation">Choose the areas in which you want to improve and enter the number of days you think it will take you to reach your goals.</string>
     <string name="progress_goals_explanation">If you progressed mark it <font color='#008000'>GREEN</font>.\n\nIf you went back it is <font color='#FF0000'>RED</font>.\n\nIf you did nothing, <font color='#dccd30'>YELLOW</font>.\n</string>
-    <string name="progress_goals_explanationSecondLine">You can record advances or setbacks as many times as you want. To advance, the important thing is to have more progress than replays during the 24 hours of the day.</string>
+    <string name="progress_goals_explanationSecondLine">You can record progresses as many times as you want. To advance, the important thing is to have more progresses than failures during the 24 hours of the day.</string>
     <string name="explanation_remove_obstacle">Remove from your mind the pending tasks that are not related to achieving your goals. Write them down and assign dates to do later.</string>
     <string name="label_pending_days">LEFT</string>
     <string name="label_days">DAYS</string>
