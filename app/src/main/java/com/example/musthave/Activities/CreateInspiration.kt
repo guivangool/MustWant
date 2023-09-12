@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -39,6 +40,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,10 +59,6 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
         //Binding
         binding = ActivityCreateInspirationBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-
-        //Action Bar
-        setSupportActionBar(binding?.tbCreateInspiration)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         createRadioButtons()
 
@@ -96,10 +94,6 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
 
             })
 
-        binding?.tbCreateInspiration?.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
         binding?.fabLoadPicture?.setOnClickListener {
             requestStoragePermission()
         }
@@ -114,7 +108,7 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
                 binding?.ivGoalImage?.setImageDrawable(null)
                 val radio: RadioButton = findViewById(checkedId)
                 loadInspiration(
-                    GoalTypeEnum.values().find { it.label == radio.text }?.number
+                    GoalTypeEnum.values().find { it.getText(this) == radio.text }?.number
                 )
             })
     }
@@ -217,7 +211,7 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
 
         for (goal in goalList) {
             val radioButton = RadioButton(this)
-            radioButton.text = GoalTypeEnum.values().find { it.number == goal }?.label
+            radioButton.text = GoalTypeEnum.values().find { it.number == goal }?.getText(this)
 
             //Set properties
             radioButton.setBackgroundResource(R.drawable.radio_button_background)
@@ -284,7 +278,7 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
             if (isNew) {
                 val radioButtonSelected =
                     findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                var goalID = GoalTypeEnum.values().find { it.label == radioButtonSelected.text }?.number as Int
+                var goalID = GoalTypeEnum.values().find { it.getText(this) == radioButtonSelected.text }?.number as Int
                 //Update ViewModel Data for INSERT
                 inspirationViewModel.goalId.value = goalID
                 inspirationViewModel.insert()

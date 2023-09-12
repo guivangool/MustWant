@@ -67,8 +67,8 @@ class ProgressGoalsList : AppCompatActivity() {
     }
 
     private fun loadProgressGoals(goalId: Int) {
-        binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString() +
-                GoalTypeEnum.values().find { it.number == goalId }?.label
+        binding?.tbProgressGoalsList?.title = binding?.tbProgressGoalsList?.title.toString() + " " +
+                GoalTypeEnum.values().find { it.number == goalId }?.getText(this)
 
         //Load obstacles from database
         progressGoalsListViewModel.setProgressesByGoalId(goalId)

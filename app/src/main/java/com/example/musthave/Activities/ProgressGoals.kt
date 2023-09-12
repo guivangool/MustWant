@@ -40,12 +40,6 @@ class ProgressGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
         binding = ActivityProgressGoalsBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        //Set back button to the Acion Bar
-        setSupportActionBar(binding?.tbProgressGoals)
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
         //Create ViewModel
         //Dao
         val progressGoalDao = (application as MustWantApp).db.goalProgressDao()
@@ -57,13 +51,8 @@ class ProgressGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
         progressGoalViewModel =
             ViewModelProvider(this, factory).get(ProgressGoalViewModel::class.java)
 
-
         setRecyclerView()
         loadProgressGoals()
-
-        binding?.tbProgressGoals?.setNavigationOnClickListener {
-            onBackPressed()
-        }
 
         //Add the fragment AcceptCancel programmatically
         if (savedInstanceState == null) {
@@ -77,16 +66,16 @@ class ProgressGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
         goalProgressAdapter.setOnClickListener(object : GoalProgressAdapter.OnClickListener {
             override fun onCLick(goal: String, stateGoal: Int) {
                 when (goal) {
-                    GoalTypeEnum.ME.label -> {
+                    GoalTypeEnum.ME.getText(applicationContext) -> {
                         stateGoalMe = stateGoal
                     }
-                    GoalTypeEnum.WORK.label -> {
+                    GoalTypeEnum.WORK.getText(applicationContext) -> {
                         stateGoalWork = stateGoal
                     }
-                    GoalTypeEnum.HOME.label -> {
+                    GoalTypeEnum.HOME.getText(applicationContext) -> {
                         stateGoalHome = stateGoal
                     }
-                    GoalTypeEnum.RELATIONS.label -> {
+                    GoalTypeEnum.RELATIONS.getText(applicationContext) -> {
                         stateGoalRelations = stateGoal
                     }
                 }
@@ -101,7 +90,7 @@ class ProgressGoals : AppCompatActivity(), OnAcceptCancelButtonClickListener {
     private fun setRecyclerView() {
         binding?.rvMyGoalsProgress?.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        goalProgressAdapter = GoalProgressAdapter()
+        goalProgressAdapter = GoalProgressAdapter(this)
         binding?.rvMyGoalsProgress?.adapter = goalProgressAdapter
     }
 

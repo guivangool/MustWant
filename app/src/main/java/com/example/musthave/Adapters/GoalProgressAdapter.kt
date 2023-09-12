@@ -1,5 +1,6 @@
 package com.example.musthave
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musthave.DataEntities.GoalProgressEntity
 import com.example.musthave.databinding.ProgressGoalBinding
 
-class GoalProgressAdapter :
+class GoalProgressAdapter (private val context: Context):
     ListAdapter<GoalProgressEntity, GoalProgressAdapter.ViewHolder>(DiffUtilCallBack) {
     private var onClickListener: OnClickListener? = null
     var goalColorMe = 0
@@ -43,22 +44,21 @@ class GoalProgressAdapter :
     override fun onBindViewHolder(holder: GoalProgressAdapter.ViewHolder, position: Int) {
         when (getItem(position).goalID) {
             1 -> {
-                holder.tvGoalProgress.text = "Yo"
+                holder.tvGoalProgress.text = context.getString(R.string.GoalMe)
                 goalColorMe = getItem(position).goalProgress
             }
             2 -> {
-                holder.tvGoalProgress.text = "Hogar"
+                holder.tvGoalProgress.text = context.getString(R.string.GoalHome)
                 goalColorWork = getItem(position).goalProgress
             }
             3 -> {
-                holder.tvGoalProgress.text = "Trabajo"
+                holder.tvGoalProgress.text = context.getString(R.string.GoalWork)
                 goalColorHome = getItem(position).goalProgress
             }
             4 -> {
-                holder.tvGoalProgress.text = "Relaciones"
+                holder.tvGoalProgress.text = context.getString(R.string.GoalRelations)
                 goalColorRelations = getItem(position).goalProgress
             }
-            //    else -> ""
         }
 
         when (getItem(position).goalProgress) {
@@ -76,7 +76,6 @@ class GoalProgressAdapter :
         holder.tvGoalProgress.setOnClickListener {
             if (onClickListener != null) {
                 val stateGoal = updateProgress(holder.tvGoalProgress.text.toString())
-                //val stateGoal = updateProgress(holder.tvGoalProgress.text.toString())
                 when (stateGoal) {
                     0 -> holder.tvGoalProgress.background = ContextCompat.getDrawable(
                         holder.itemView.context,
@@ -104,22 +103,22 @@ class GoalProgressAdapter :
 
     private fun updateProgress(goalName: String): Int {
         when (goalName) {
-            "Yo" -> {
+            context.getString(R.string.GoalMe) -> {
                 goalColorMe++
                 if (goalColorMe > 2) goalColorMe = 0
                 return goalColorMe
             }
-            "Trabajo" -> {
+            context.getString(R.string.GoalWork) -> {
                 goalColorWork++
                 if (goalColorWork > 2) goalColorWork = 0
                 return goalColorWork
             }
-            "Hogar" -> {
+            context.getString(R.string.GoalHome) -> {
                 goalColorHome++
                 if (goalColorHome > 2) goalColorHome = 0
                 return goalColorHome
             }
-            "Relaciones" -> {
+            context.getString(R.string.GoalRelations) -> {
                 goalColorRelations++
                 if (goalColorRelations > 2) goalColorRelations = 0
                 return goalColorRelations

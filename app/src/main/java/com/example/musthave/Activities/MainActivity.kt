@@ -1,14 +1,14 @@
 package com.example.musthave.Activities
 
+import android.annotation.SuppressLint
 import  android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musthave.*
@@ -17,6 +17,8 @@ import com.example.musthave.DataEntities.GoalEntity
 import com.example.musthave.DomainEntities.MainMessage
 import com.example.musthave.Enums.GoalTypeEnum
 import com.example.musthave.Factories.MainViewModelFactory
+import com.example.musthave.Fragments.ActionNeeded
+import com.example.musthave.GeneralFunctions.*
 import com.example.musthave.Repositories.MainRepository
 import com.example.musthave.viewModels.MainViewModel
 import com.example.musthave.databinding.ActivityMainBinding
@@ -32,13 +34,43 @@ class MainActivity : AppCompatActivity() {
     private var goalList = ArrayList<Int>()
     private var goalsSelection = ArrayList<GoalEntity>()
     private lateinit var mainViewModel: MainViewModel
-    
+
+    override fun onBackPressed() {
+        confirmExitApp()
+    }
+
+    private fun confirmExitApp( ) {
+        val customDialog = Dialog(this)
+        val dialogBinding = CustomDialogAcceptCancelBinding.inflate(layoutInflater)
+
+        customDialog.setContentView(dialogBinding.root)
+        customDialog.setCanceledOnTouchOutside(false)
+
+        dialogBinding.tvQuestion.text = this.getString(R.string.question_sure_want_exit)
+        dialogBinding.tvExplanation.text = ""
+
+        dialogBinding.btnYes.setOnClickListener {
+            this.finish()
+        }
+        dialogBinding.btnNo.setOnClickListener {
+            customDialog.dismiss()
+        }
+        customDialog.show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        //Animate options
+        animateLogo(binding?.tvProgress,400)
+        animateLogo(binding?.tvEmotion,400)
+        animateLogo(binding?.tvManageObstacles,400)
+        animateLogo(binding?.tvSetGoalOption,400)
+        animateLogo(binding?.tvAssignMotivation,400)
+        animateLogo(binding?.tvStartAgain,400)
 
         //Create ViewModel
         //Daos
@@ -54,12 +86,12 @@ class MainActivity : AppCompatActivity() {
                 ViewModelProvider(this,factory).get(MainViewModel::class.java)
 
         //Observe View Model to show Selected Goals
-        mainViewModel.goalsSelection.observe(this, androidx.lifecycle.Observer { selectedGoalsData ->
+        mainViewModel.goalsSelection.observe(this, Observer { selectedGoalsData ->
             setSelectedGoals(selectedGoalsData)
         })
 
         //Observe View Model to show messages
-        mainViewModel.mainMessage.observe(this, androidx.lifecycle.Observer { mainMessage ->
+        mainViewModel.mainMessage.observe(this, Observer { mainMessage ->
             showMessage(mainMessage)
         })
 
@@ -127,31 +159,47 @@ class MainActivity : AppCompatActivity() {
             customDialog.show()
         }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private  fun showMessage(mainMessage: MainMessage) {
+        val bundle = Bundle()
+        val fragment = ActionNeeded()
+
+        bundle.putInt("messageNumber",mainMessage.messageNumber)
+        bundle.putString("message",mainMessage.message)
+        bundle.putString("messageImage",mainMessage.image)
+        fragment.arguments = bundle
+        var fragmentTransaction  = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)
+        fragmentTransaction.replace(R.id.fragment_action_needed,fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+
+        //animate recommended action button
+        binding ?.tvSetGoalOption!!.background = getDrawable (R.drawable.bg_option_main)
+        binding ?.tvProgress!!.background = getDrawable (R.drawable.bg_option_main)
+        binding ?.tvAssignMotivation!!.background = getDrawable (R.drawable.bg_option_main)
+        binding?.tvSetGoalOption!!.setTextColor(getResources().getColor(R.color.white))
+        binding?.tvProgress!!.setTextColor(getResources().getColor(R.color.white))
+        binding?.tvAssignMotivation!!.setTextColor(getResources().getColor(R.color.white))
+
         when (mainMessage.messageNumber) {
             1 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_goals_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
+                vibrateView(binding?.tvSetGoalOption)
+                binding?.tvSetGoalOption!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvSetGoalOption!!.setTextColor(getResources().getColor(R.color.black))
+        }
+            2 ->{
+                vibrateView(binding?.tvProgress)
+                binding?.tvProgress!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvProgress!!.setTextColor(getResources().getColor(R.color.black))
             }
-            2 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_accion))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_goals_progress_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
-            }
-            3 -> {
-                binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.fondo_recomendada))
-                binding?.tvToDO?.text = getResources().getString(R.string.action_create_inspiration_message)
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.FIT_START
-            }
-            4 -> {
-                var bitmap: Bitmap = BitmapFactory.decodeFile(mainMessage.image)
-                binding?.ivToDo?.setImageBitmap(bitmap)
-                binding?.tvToDO?.text = mainMessage.message
-                binding?.ivToDo?.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding?.tvToDO?.setTextColor(resources.getColor(R.color.white))
+            3 ->{
+                vibrateView(binding?.tvAssignMotivation)
+                binding?.tvAssignMotivation!!.background = getDrawable (R.drawable.bg_recomended_option_main)
+                binding?.tvAssignMotivation!!.setTextColor(getResources().getColor(R.color.black))
             }
         }
+
     }
 
     //Update UI with selected goals
@@ -175,7 +223,7 @@ class MainActivity : AppCompatActivity() {
 
             goalAdapter?.setOnClickListener(object : MyGoalsAdapter.OnClickListener {
             override fun onCLick(goal: String) {
-                selectedGoal = GoalTypeEnum.values().find {it.label == goal}?.number
+                selectedGoal = GoalTypeEnum.values().find {it.getText(this@MainActivity) == goal}?.number
 
                 val intent = Intent(this@MainActivity, ProgressGoalsList::class.java)
                 intent.putExtra("selectedGoal", selectedGoal)
@@ -200,7 +248,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupMyGoalsRecyclerView(selectedGoals: ArrayList<GoalEntity>) {
             binding?.rvMyGoals?.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            goalAdapter = MyGoalsAdapter(selectedGoals)
+            goalAdapter = MyGoalsAdapter(this,selectedGoals)
             binding?.rvMyGoals?.adapter = goalAdapter
     }
 

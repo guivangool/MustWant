@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity"
-    android:background="@color/green_background_initial">
+    android:background="@drawable/background_ligth_blue">
 
     <LinearLayout
         android:id="@+id/flGoals"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="10dp"
         android:background="@drawable/background_panel"
         android:gravity="center"
         android:orientation="vertical"
@@ -37,12 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="110dp"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
             android:text="@string/message_no_goals_selected"
             android:textStyle="bold"
             android:textColor="@color/gray"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/GoalFontSize"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMyGoals"
@@ -51,138 +50,95 @@
             android:paddingTop="10dp" />
     </LinearLayout>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_action_needed"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/llActions"
+        app:layout_constraintTop_toBottomOf="@+id/flGoals"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteX="10dp" />
+
     <LinearLayout
         android:id="@+id/llActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/flGoals"
+        app:layout_constraintBottom_toTopOf="@+id/llConfig"
         android:background="@drawable/background_panel"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="10dp"
         android:paddingBottom="10dp">
-    <TextView
-        android:id="@+id/tvActions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/title_actions"
-        android:layout_gravity="left"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flGoals"
-        android:textStyle="bold"
-        android:textColor="@color/section_title_color"
-        android:textSize="@dimen/section_title_size"/>
-
-
-    <LinearLayout
-        android:id="@+id/llActionsItems"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/llActions"
-        android:orientation="horizontal"
-        android:gravity="center">
-    <TextView
-        android:id="@+id/tvProgress"
-        app:layout_constraintTop_toBottomOf="@+id/tvActions"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_height="50dp"
-        android:layout_width="90dp"
-        android:background="@drawable/bg_option_main"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:text="@string/option_name_register_advance"
-        />
-
-    <TextView
-        android:id="@+id/tvEmotion"
-        app:layout_constraintTop_toBottomOf="@+id/tvActions"
-        app:layout_constraintLeft_toRightOf="@+id/tvProgress"
-        android:layout_marginLeft="30dp"
-        android:layout_height="50dp"
-        android:layout_width="90dp"
-        android:background="@drawable/bg_option_main"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:text="@string/option_name_remove_obstacle"
-        />
-
-    <TextView
-        android:id="@+id/tvManageObstacles"
-        app:layout_constraintTop_toBottomOf="@+id/tvActions"
-        app:layout_constraintLeft_toRightOf="@+id/tvEmotion"
-        android:layout_marginLeft="30dp"
-
-        android:layout_height="50dp"
-        android:layout_width="90dp"
-        android:background="@drawable/bg_option_main"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:text="@string/option_name_admin_obstacles"
-        />
-    </LinearLayout>
-    </LinearLayout>
-
-    <FrameLayout
-        app:layout_constraintTop_toBottomOf="@+id/llActions"
-        app:layout_constraintBottom_toTopOf="@+id/llConfig"
-        android:id="@+id/flToDo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/background_panel_green"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="10dp"
-        >
-        <ImageView
-            android:id="@+id/ivToDo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/fondo_accion"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitStart"></ImageView>
-"
         <TextView
-            android:id="@+id/tvToDO"
+            android:id="@+id/tvActions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_goals_message"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/title_actions"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
             android:textStyle="bold"
-            android:textSize="24dp"
-            android:textColor="@color/bg_mygoals_color"
-            android:layout_gravity="center"
-        />
-    </FrameLayout>
+            android:textColor="@color/section_title_color"
+            android:textSize="@dimen/section_title_size"/>
+
+        <LinearLayout
+            android:id="@+id/llActionsItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/llActions"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_height="50dp"
+                android:layout_width="90dp"
+                android:background="@drawable/bg_option_main"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/option_name_register_advance" />
+
+            <TextView
+                android:id="@+id/tvEmotion"
+                android:layout_marginLeft="30dp"
+                android:layout_height="50dp"
+                android:layout_width="90dp"
+                android:background="@drawable/bg_option_main"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/option_name_remove_obstacle" />
+
+            <TextView
+                android:id="@+id/tvManageObstacles"
+                android:layout_marginLeft="30dp"
+                android:layout_height="50dp"
+                android:layout_width="90dp"
+                android:background="@drawable/bg_option_main"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/option_name_admin_obstacles" />
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/llConfig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/flToDo"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/background_panel"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:paddingBottom="10dp">
+        android:layout_margin="10dp"
+        android:paddingBottom="10dp"
+        >
     <TextView
         android:id="@+id/tvConfig"
         android:layout_width="wrap_content"
@@ -192,9 +148,6 @@
         android:layout_marginLeft="10dp"
         android:text="@string/title_configuration"
         android:layout_gravity="left"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llActions"
         android:textStyle="bold"
         android:textSize="@dimen/section_title_size"
         android:textColor="@color/section_title_color"/>
@@ -203,7 +156,6 @@
         android:id="@+id/llConfigItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfig"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -216,28 +168,10 @@
             android:text="@string/option_name_select_goals"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvConfig" />
+            android:textStyle="bold" />
 
         <TextView
-        android:id="@+id/tvAssignMotivation"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfig"
-        app:layout_constraintLeft_toRightOf="@+id/tvSetGoalOption"
-        android:layout_height="50dp"
-        android:layout_width="90dp"
-        android:layout_marginLeft="30dp"
-        android:background="@drawable/bg_option_main"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:text="@string/option_name_create_inspiration"
-        />
-        <TextView
-            android:id="@+id/tvStartAgain"
-            app:layout_constraintTop_toBottomOf="@+id/tvConfig"
-            app:layout_constraintLeft_toRightOf="@+id/tvAssignMotivation"
+            android:id="@+id/tvAssignMotivation"
             android:layout_height="50dp"
             android:layout_width="90dp"
             android:layout_marginLeft="30dp"
@@ -246,8 +180,19 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="@string/option_name_start_again"
-            />
+            android:text="@string/option_name_create_inspiration" />
+
+        <TextView
+            android:id="@+id/tvStartAgain"
+            android:layout_height="50dp"
+            android:layout_width="90dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/bg_option_main"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/option_name_start_again" />
     </LinearLayout>
     </LinearLayout>
 
