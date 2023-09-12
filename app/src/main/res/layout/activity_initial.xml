@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.Initial"
-    android:background="@color/green_logo"
-    android:backgroundTint="@color/blue_background_initial"
+    android:background="@color/blue_background_initial"
     android:orientation="vertical"
     android:gravity="center">
 

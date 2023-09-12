@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.ProgressGoals"
     android:orientation="vertical"
-    android:background="@color/blue_background_initial">
+    android:background="@drawable/background_ligth_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clProgressGoals"
@@ -46,6 +46,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/fragment_accept_cancel"
             app:layout_constraintTop_toBottomOf="@+id/rvMyGoalsProgress"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:padding="20dp"/>
 
         <androidx.fragment.app.FragmentContainerView

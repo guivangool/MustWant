@@ -14,7 +14,7 @@
     android:layout_height="wrap_content"
     tools:context=".Activities.RemoveObstacle"
     android:layout_marginTop="10dp"
-    android:background="@color/blue_background_initial">
+    android:background="@drawable/background_ligth_blue">
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/clRemoveObstacle"
