@@ -34,7 +34,29 @@ class MainActivity : AppCompatActivity() {
     private var goalList = ArrayList<Int>()
     private var goalsSelection = ArrayList<GoalEntity>()
     private lateinit var mainViewModel: MainViewModel
-    
+
+    override fun onBackPressed() {
+        confirmExitApp()
+    }
+
+    private fun confirmExitApp( ) {
+        val customDialog = Dialog(this)
+        val dialogBinding = CustomDialogAcceptCancelBinding.inflate(layoutInflater)
+
+        customDialog.setContentView(dialogBinding.root)
+        customDialog.setCanceledOnTouchOutside(false)
+
+        dialogBinding.tvQuestion.text = this.getString(R.string.question_sure_want_exit)
+        dialogBinding.tvExplanation.text = ""
+
+        dialogBinding.btnYes.setOnClickListener {
+            this.finish()
+        }
+        dialogBinding.btnNo.setOnClickListener {
+            customDialog.dismiss()
+        }
+        customDialog.show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

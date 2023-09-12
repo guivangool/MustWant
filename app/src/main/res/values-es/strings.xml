@@ -52,5 +52,6 @@
     <string name="explanation_remove_obstacle">Eliminá de tu mente las tareas pendientes que no están relacionadas a alcanzar tus objetivos. Anotalas y asignales una fecha para hacerlas luego.</string>
     <string name="label_pending_days">FALTAN</string>
     <string name="label_days">DÍAS</string>
+    <string name="question_sure_want_exit">¿Estás seguro que querés salir?</string>
 
 </resources>

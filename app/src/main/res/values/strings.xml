@@ -52,5 +52,7 @@
     <string name="explanation_remove_obstacle">Remove from your mind the pending tasks that are not related to achieving your goals. Write them down and assign dates to do later.</string>
     <string name="label_pending_days">LEFT</string>
     <string name="label_days">DAYS</string>
+    <string name="question_sure_want_exit">Are you sure you want to exit?</string>
+
 
 </resources>

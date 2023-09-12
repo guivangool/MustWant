@@ -34,8 +34,6 @@ class ActionNeeded : Fragment(R.layout.fragment_action_needed) {
         val messageImage = bundle!!.getString("messageImage")
         val message = bundle!!.getString("message")
 
-
-
         when (messageNumber) {
             1 -> {
                 binding?.ivToDo?.setImageDrawable(getResources().getDrawable(R.drawable.bg_action_without_title))
