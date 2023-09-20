@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MustHave</string>
+    <string name="app_name">MustWant</string>
     <string name="GoalMe">Yo</string>
     <string name="GoalHome">Hogar</string>
     <string name="GoalWork">Trabajo</string>
@@ -16,7 +16,7 @@
     <string name="title_actions">ACCIONES</string>
     <string name="option_name_register_advance">Registrar avance</string>
     <string name="option_name_remove_obstacle">Eliminar obstáculo</string>
-    <string name="option_name_admin_obstacles">Administrar obstáculos</string>
+    <string name="option_name_admin_obstacles">Pendientes</string>
     <string name="title_configuration">CONFIGURACIÓN</string>
     <string name="option_name_select_goals"> Áreas a mejorar </string>
     <string name="option_name_create_inspiration">Motivarme</string>

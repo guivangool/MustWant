@@ -3,7 +3,7 @@
   <data>
     <variable
         name="obstacleViewModel"
-        type="com.example.musthave.viewModels.ObstacleViewModel" />
+        type="com.gvg.mustwant.viewModels.ObstacleViewModel" />
   </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

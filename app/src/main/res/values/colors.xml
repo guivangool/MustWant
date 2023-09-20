@@ -12,7 +12,7 @@
     <color name="section_title_color">#FF000000</color>
     <color name="bg_mygoals_color">#1b4332</color>
     <color name="bg_option_main_color">#40916c</color>
-    <color name="percentaje_color">#64dfdf</color>
+    <color name="percentaje_color">#000000</color>
     <color name="bg_section_main_color">#f8f9fa</color>
     <color name="bg_main_image">#38a3a5</color>
     <color name="bg_main_action">#80ed99</color>
@@ -22,7 +22,7 @@
     <color name="green_button">#6ABB6F</color>
     <color name="green_background">#14521E</color>
     <color name="green_check_mark">#FF3CB56A</color>
-    <color name="yellow_progress">#96FFEB3B</color>
+    <color name="yellow_progress">#96FFEB3B</color>     
     <color name="green_progress">#A14CAF50</color>
     <color name="red_progress">#90FF5722</color>
     <color name="gray">#D5CBCA</color>
@@ -32,6 +32,16 @@
     <color name="bg_option_main_color_aux">#5C5E5E</color>
     <color name="bg_option_main_color_ligth_gray">#B0D6D1D1</color>
     <color name="bg_main_message">#000000</color>
-    <color name="bg_recomended_option">#ff914d</color>
+    <color name="bg_recomended_option">#fb8500</color>
+    <color name="bg_panel_main_color">#cbf3f0</color>
+    <color name="bg_goals_panel_main_color">#219ebc</color>
+    <color name="bg_option_main_new_color">#9dd9d2</color>
+
+    <color name="bg_main_goal_status_decrease">#ce4257</color>
+    <color name="bg_main_goal_status_increase">#90be6d</color>
+    <color name="bg_main_goal_status_equal">#f4d06f</color>
+    <color name="text_magic_color">#7678ed</color>
+    <color name="pending_days">#fff8f0</color>
+    <color name="bg_panel_main_actions_color">#d3d3d3</color>
 
 </resources>

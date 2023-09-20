@@ -9,17 +9,28 @@
     tools:context=".Activities.MainActivity"
     android:background="@drawable/background_ligth_blue">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_action_needed"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/flGoals"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteX="10dp" />
+
+
     <LinearLayout
         android:id="@+id/flGoals"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="10dp"
-        android:background="@drawable/background_panel"
+        android:background="@drawable/bg_goals_panel_main"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintBottom_toTopOf="@+id/llActions">
+
         <TextView
             android:id="@+id/tvGoals"
             android:layout_width="wrap_content"
@@ -29,7 +40,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/title_my_goals"
             android:textStyle="bold"
-            android:textColor="@color/section_title_color"
+            android:textColor="@color/black"
             android:textSize="@dimen/section_title_size"/>
 
         <TextView
@@ -50,22 +61,12 @@
             android:paddingTop="10dp" />
     </LinearLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_action_needed"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/llActions"
-        app:layout_constraintTop_toBottomOf="@+id/flGoals"
-        app:layout_constraintVertical_bias="0.4"
-        tools:layout_editor_absoluteX="10dp" />
-
     <LinearLayout
         android:id="@+id/llActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/llConfig"
-        android:background="@drawable/background_panel"
+        android:background="@drawable/bg_panel_main_actions"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_margin="10dp"
@@ -80,7 +81,7 @@
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"
-            android:textColor="@color/section_title_color"
+            android:textColor="@color/black"
             android:textSize="@dimen/section_title_size"/>
 
         <LinearLayout
@@ -97,7 +98,7 @@
                 android:layout_width="90dp"
                 android:background="@drawable/bg_option_main"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:text="@string/option_name_register_advance" />
@@ -109,7 +110,7 @@
                 android:layout_width="90dp"
                 android:background="@drawable/bg_option_main"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:text="@string/option_name_remove_obstacle" />
@@ -121,7 +122,7 @@
                 android:layout_width="90dp"
                 android:background="@drawable/bg_option_main"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:text="@string/option_name_admin_obstacles" />
@@ -133,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/background_panel"
+        android:background="@drawable/bg_panel_main"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_margin="10dp"
@@ -150,7 +151,7 @@
         android:layout_gravity="left"
         android:textStyle="bold"
         android:textSize="@dimen/section_title_size"
-        android:textColor="@color/section_title_color"/>
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/llConfigItems"
@@ -166,7 +167,7 @@
             android:background="@drawable/bg_option_main"
             android:gravity="center"
             android:text="@string/option_name_select_goals"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -177,7 +178,7 @@
             android:layout_marginLeft="30dp"
             android:background="@drawable/bg_option_main"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="@string/option_name_create_inspiration" />
@@ -189,7 +190,7 @@
             android:layout_marginLeft="30dp"
             android:background="@drawable/bg_option_main"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="@string/option_name_start_again" />
