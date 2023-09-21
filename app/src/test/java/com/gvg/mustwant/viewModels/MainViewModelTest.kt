@@ -45,10 +45,10 @@ class MainViewModelTest {
         mainViewModel = MainViewModel(mainRepository)
 
         //Then
-        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(1, false, 0)) }
-        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(2, false, 0)) }
-        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(3, false, 0)) }
-        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(4, false, 0)) }
+        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(1, false, 0,0,0)) }
+        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(2, false, 0,0,0)) }
+        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(3, false, 0,0,0)) }
+        coVerify(exactly = 1) { mainRepository.insertGoal(GoalEntity(4, false, 0,0,0)) }
 
         assert(mainViewModel.goalsSelection.value!!.size == 0)
 
@@ -58,7 +58,7 @@ class MainViewModelTest {
     fun `when there are goals in the database the app does not insert default values`() = runTest {
         //Given
         var selectedGoalsTest = ArrayList<GoalEntity>()
-        selectedGoalsTest.add(GoalEntity(1,true,0))
+        selectedGoalsTest.add(GoalEntity(1,true,0,0,0))
         coEvery { mainRepository.getSelectedGoals() } returns selectedGoalsTest
         coEvery { mainRepository.getGoals() } returns selectedGoalsTest
 
@@ -66,10 +66,10 @@ class MainViewModelTest {
         mainViewModel = MainViewModel(mainRepository)
 
         //Then
-        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(1, false, 0)) }
-        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(2, false, 0)) }
-        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(3, false, 0)) }
-        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(4, false, 0))}
+        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(1, false, 0,0,0)) }
+        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(2, false, 0,0,0)) }
+        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(3, false, 0,0,0)) }
+        coVerify(exactly = 0) { mainRepository.insertGoal(GoalEntity(4, false, 0,0,0))}
         assert(mainViewModel.goalsSelection.value!!.size == 1)
     }
 }
