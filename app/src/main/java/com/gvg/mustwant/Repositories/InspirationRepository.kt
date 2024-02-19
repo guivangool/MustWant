@@ -14,9 +14,9 @@ class InspirationRepository (private val dao:InspirationDao) {
         return dao.insert(inspirationEntity)
     }
 
-    suspend fun update (inspirationEntity: InspirationEntity)
+    suspend fun update (goalId:Int, phrase:String, image:String)
     {
-        return dao.update(inspirationEntity)
+        return dao.updateInspiration(goalId,phrase,image)
     }
 
 }

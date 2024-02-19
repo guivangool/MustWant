@@ -19,4 +19,8 @@ interface InspirationDao {
 
     @Query("SELECT * FROM 'goal_inspiration_table'")
     suspend fun getAllGoalInspiration(): List<InspirationEntity>
+
+    @Query("UPDATE 'goal_inspiration_table' SET phrase = :phrase, image = :image WHERE goalID = :goalID")
+    suspend fun updateInspiration( goalID: Int,phrase: String, image: String)
+
 }

@@ -47,7 +47,6 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
     private var goalList = ArrayList<Int>()
     private lateinit var inspirationList : List<InspirationEntity>
     private var isNew = true
-    private var currentInspiration: InspirationEntity? = null
     private lateinit var inspirationViewModel: InspirationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,9 +76,7 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
         val factory = InspirationViewModelFactory(repository)
         //ViewModel
         inspirationViewModel =
-            ViewModelProvider(this, factory).get(InspirationViewModel::class.java)
-        //binding?.obstacleViewModel = obstacleViewModel
-        //binding?.lifecycleOwner = this
+            ViewModelProvider(this,factory).get(InspirationViewModel::class.java)
 
         //Observe ViewModel
         inspirationViewModel.inspirations.observe(
@@ -111,16 +108,18 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
     }
 
     private fun loadInspiration(goalId: Int?) {
-        if (!inspirationList.isEmpty()) {
-            currentInspiration = inspirationList.find { it.goalId == goalId }
-            if (currentInspiration != null) {
-                var bitmap: Bitmap = BitmapFactory.decodeFile(currentInspiration?.image)
-                binding?.ivGoalImage?.setImageBitmap(bitmap)
-                binding?.etSetPhrase?.setText(currentInspiration?.phrase.toString())
-                isNew = false
-            } else {
-                isNew = true
+        if (inspirationList.isNotEmpty()) {
+            if (inspirationList.find { it.goalId == goalId } != null) {
+                with(inspirationList.find { it.goalId == goalId })
+                {
+                    val bitmap: Bitmap = BitmapFactory.decodeFile(this?.image!!)
+                    binding?.ivGoalImage?.setImageBitmap(bitmap)
+                    binding?.etSetPhrase?.setText(phrase.toString())
+                    isNew = false
+                }
             }
+            else
+                isNew = true
         }
     }
 
@@ -267,23 +266,17 @@ class CreateInspiration : AppCompatActivity(),OnAcceptCancelButtonClickListener 
             binding?.ivGoalImage?.drawable != null
         ) {
             val filePath = saveImageToInternalStorage(binding?.ivGoalImage?.drawable)
-
-            //Update ViewModel Data
-            inspirationViewModel.image.value = filePath.toString()
-            inspirationViewModel.phrase.value = binding?.etSetPhrase?.text.toString()
+            val radioButtonSelected =
+                findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
+            val goalID = GoalTypeEnum.values().find { it.getText(this) == radioButtonSelected.text }?.number as Int
 
             if (isNew) {
-                val radioButtonSelected =
-                    findViewById(binding?.rgSelectedGoals?.checkedRadioButtonId as Int) as RadioButton
-                var goalID = GoalTypeEnum.values().find { it.getText(this) == radioButtonSelected.text }?.number as Int
-                //Update ViewModel Data for INSERT
-                inspirationViewModel.goalId.value = goalID
-                inspirationViewModel.insert()
+
+                //Call ViewModel INSERT
+                inspirationViewModel.insert(goalID,binding?.etSetPhrase?.text.toString(),filePath.toString())
             } else {
-                //Update ViewModel Data for UPDATE
-                inspirationViewModel.id.value = currentInspiration!!.id
-                inspirationViewModel.goalId.value = currentInspiration!!.goalId
-                inspirationViewModel.update()
+                //Call ViewModel Update
+                inspirationViewModel.update(goalID,binding?.etSetPhrase?.text.toString(),filePath.toString())
             }
             finish()
         } else {

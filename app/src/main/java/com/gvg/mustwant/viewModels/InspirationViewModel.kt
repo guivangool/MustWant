@@ -1,5 +1,6 @@
 package com.gvg.mustwant.viewModels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,11 +9,9 @@ import com.gvg.mustwant.Repositories.InspirationRepository
 import kotlinx.coroutines.launch
 
 class InspirationViewModel (private val repository : InspirationRepository) : ViewModel() {
-    val inspirations : MutableLiveData<List<InspirationEntity>> = MutableLiveData<List<InspirationEntity>>()
-    val id : MutableLiveData<Int> = MutableLiveData()
-    val phrase : MutableLiveData<String> = MutableLiveData()
-    val goalId : MutableLiveData<Int> = MutableLiveData()
-    val image : MutableLiveData<String> = MutableLiveData()
+    private val _inspirations : MutableLiveData<List<InspirationEntity>> = MutableLiveData<List<InspirationEntity>>()
+    val inspirations : LiveData<List<InspirationEntity>>
+        get() = _inspirations
 
     init {
         loadInspirations()
@@ -20,19 +19,19 @@ class InspirationViewModel (private val repository : InspirationRepository) : Vi
     fun loadInspirations() {
         viewModelScope.launch {
              val inspirationsList = repository.loadInspirations()
-             inspirations.postValue(inspirationsList)
+             _inspirations.postValue(inspirationsList)
         }
     }
 
-    fun insert(){
+    fun insert( goalID: Int,  phrase:String,image: String ){
         viewModelScope.launch{
-            repository.insert(InspirationEntity(null,goalId.value!!,phrase.value!!,image.value!!))
+            repository.insert(InspirationEntity(null,goalID,phrase,image))
         }
     }
 
-    fun update(){
+    fun update(goalID: Int,  phrase:String,image: String){
         viewModelScope.launch{
-            repository.update(InspirationEntity(id.value!!,goalId.value!!,phrase.value!!,image.value!!))
+            repository.update(goalID,phrase,image)
         }
     }
 }
