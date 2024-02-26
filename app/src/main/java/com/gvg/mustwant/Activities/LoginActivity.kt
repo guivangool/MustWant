@@ -32,7 +32,8 @@ class LoginActivity : AppCompatActivity() {
         binding?.btnlogin?.setBackgroundResource(R.drawable.shape_button_rounded)
 
         observeUser()
-        observeBalance()
+        //observeBalance()
+
 
         //User press "Sign In with Google" button
         binding?.btnLoginWithGoogle?.setOnClickListener {
@@ -51,8 +52,9 @@ class LoginActivity : AppCompatActivity() {
         userViewModel.user.observe(this, Observer { user ->
             if (user==null)
                 userViewModel.insert((User(null, "837f88087bmshcb02f4f54789e45p1e79a3jsnc31926d653ef", "Guillermo", "Van Gool")))
-            else
+            else {
                 idUser = user.id!!
+            }
         })
     }
 
@@ -64,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         incomeViewModel = ViewModelProvider(this,incomeFactory).get(IncomeViewModel::class.java)
 
         incomeViewModel.balance.observe(this, Observer { balance ->
-            if (balance == null)
+            if (balance == null || idUser!=0)
             {
                 incomeViewModel.insert(Income(null,idUser,13000.0))
             }

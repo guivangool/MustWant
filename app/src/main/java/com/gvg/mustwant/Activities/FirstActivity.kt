@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gvg.mustwant.Adapters.CreditCardsAdapter
 import com.gvg.mustwant.DataEntities.CreditCard
+import com.gvg.mustwant.DataEntities.Income
 import com.gvg.mustwant.DataEntities.User
 import com.gvg.mustwant.Factories.CreditCardViewModelFactory
 import com.gvg.mustwant.Factories.IncomeViewModelFactory
@@ -30,6 +31,7 @@ class FirstActivity : AppCompatActivity() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var creditCardViewModel: CreditCardViewModel
     private var creditCardAdapter: CreditCardsAdapter? = null
+    private  var idUser:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,9 +40,10 @@ class FirstActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         //Show initial info
-        observeBalance()
+
         observeUser()
         observeCreditCards()
+        observeBalance()
 
 
 
@@ -81,7 +84,10 @@ class FirstActivity : AppCompatActivity() {
         incomeViewModel = ViewModelProvider(this,incomeFactory).get(IncomeViewModel::class.java)
 
         incomeViewModel.balance.observe(this, Observer { balance ->
-            binding?.tvBalance?.text = "$ " + incomeViewModel.balance.value.toString()
+            if (balance == null)
+                incomeViewModel.insert(Income(null,idUser,13000.0))
+            else
+                binding?.tvBalance?.text = "$ " + incomeViewModel.balance.value.toString()
         })
     }
 
@@ -94,6 +100,7 @@ class FirstActivity : AppCompatActivity() {
 
         userViewModel.user.observe(this, Observer { user ->
             binding?.tvWelcomeMessage?.text = "Bienvenido ${user.name} ${user.surname}"
+            idUser = user.id!!
         })
 
     }

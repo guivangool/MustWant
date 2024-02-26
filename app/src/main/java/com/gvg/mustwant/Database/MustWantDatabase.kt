@@ -18,7 +18,7 @@ import com.gvg.mustwant.TypeConverters.DateConverter
         CreditCard::class,
         Income::class,
         Payment::class],
-        version = 42
+        version = 48
 )
 @TypeConverters(DateConverter::class)
 
