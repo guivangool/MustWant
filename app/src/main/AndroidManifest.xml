@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gvg.mustwant">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
@@ -16,49 +19,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MustWant">
-
         <activity
-            android:name=".Activities.Initial"
+            android:name=".Activities.PayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddCreditCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.GenerateQRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.FirstActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MustWant.NoActionBar" >
+            android:theme="@style/Theme.MustWant.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".Activities.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MustWant.NoActionBar" />
-        <activity
-            android:name=".Activities.ProgressGoalsList"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
-        <activity
-            android:name=".Activities.ObstacleList"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
-        <activity
-            android:name=".Activities.RemoveObstacle"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
-
-        <activity
-            android:name=".Activities.CreateInspiration"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
-        <activity
-            android:name=".Activities.ProgressGoals"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity
-            android:name=".Activities.SelectGoals"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
     </application>
 
 </manifest>

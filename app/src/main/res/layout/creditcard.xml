@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/llCreditCard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="120dp"
+        android:layout_height="75dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg_goals_panel_main"
+        >
+        <TextView
+            android:id="@+id/tvId"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:text="4509 9535 6623 3704"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/llSecondLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvExpDate"
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:text="Vence: 11/25"
+            android:paddingRight="3dp"/>
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:textStyle="bold"
+
+            android:text="GUILLERMO VAN GOOL"/>
+    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom">
+            <ImageView
+                android:id="@+id/ivType"
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:src="@drawable/visa"
+                android:paddingLeft="5dp">
+            </ImageView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

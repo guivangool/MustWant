@@ -34,7 +34,7 @@
     <color name="bg_main_message">#000000</color>
     <color name="bg_recomended_option">#fb8500</color>
     <color name="bg_panel_main_color">#cbf3f0</color>
-    <color name="bg_goals_panel_main_color">#219ebc</color>
+    <color name="bg_goals_panel_main_color">#FFFFFF</color>
     <color name="bg_option_main_new_color">#9dd9d2</color>
 
     <color name="bg_main_goal_status_decrease">#ce4257</color>
