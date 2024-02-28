@@ -12,7 +12,6 @@ class Initial : AppCompatActivity() {
     private var binding: ActivityInitialBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val eventBundle = Bundle()
         super.onCreate(savedInstanceState)
 
         //Binding
@@ -22,6 +21,7 @@ class Initial : AppCompatActivity() {
         //Animate logo
         animateLogo(binding?.ivLogo)
 
+        //Start MainActivity after a moment to show the logo
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
